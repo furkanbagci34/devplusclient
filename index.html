@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Akin VIP Dizayn" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
+  <link rel="stylesheet" href="/splash-screen.css">
+  <link rel="stylesheet" type="text/css" href="/dx.material.blue.light.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akın VIP Dizayn</title>
+</head>
+
+<body class="page-loading">
+
+  <script>
+      if (document.documentElement) {
+          var defaultThemeMode = "system";
+
+          var themeMode = localStorage.getItem("kt_theme_mode_value");
+          if (!themeMode) {
+              if (defaultThemeMode === "system") {
+                  themeMode =
+                      window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+              } else {
+                  themeMode = defaultThemeMode;
+              }
+          }
+
+          document.documentElement.setAttribute("data-bs-theme", themeMode);
+      }
+  </script>
+
+  <div id="app"></div>
+  
+  <div id="splash-screen" class="splash-screen">
+    <img src="/media/logos/default-small.svg" alt="logo" />
+    <span>Yükleniyor ...</span>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+  
+</body>
+</html>
