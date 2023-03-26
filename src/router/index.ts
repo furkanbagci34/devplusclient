@@ -151,19 +151,23 @@ router.beforeEach(async (to, from, next) => {
 
   if(!authStore.getUser){
     if (to.meta.middleware == "auth") {
-      const userInfo = await ApiService.Post("login/verifyToken", {accessToken: JwtService.getToken()});
-      if(!userInfo.success){
+      if(!JwtService.getToken()){
         next({ name: 'sign-in' })
+      } else {
+        const userInfo = await ApiService.Post("login/verifyToken", {accessToken: JwtService.getToken()});
+        if(!userInfo || !userInfo.success){
+          next({ name: 'sign-in' })
+        }
+        authStore.setUser({
+          name: userInfo.body.userInfo.name,
+          surname: userInfo.body.userInfo.surname,
+          email: userInfo.body.userInfo.email,
+          phone: userInfo.body.userInfo.mobile_phone,
+          role: userInfo.body.userInfo.role.role[0],
+          isAuth: userInfo.body.isAuth
+        })
+        next();
       }
-      authStore.setUser({
-        name: userInfo.body.userInfo.name,
-        surname: userInfo.body.userInfo.surname,
-        email: userInfo.body.userInfo.email,
-        phone: userInfo.body.userInfo.mobile_phone,
-        role: userInfo.body.userInfo.role.role[0],
-        isAuth: userInfo.body.isAuth
-      })
-      next();
     } else {
       next();
     }
