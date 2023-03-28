@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class DevPlusApiService
 {
-    async Post(url, data, token = null) {
+    async Post(url, data, token?) {
 
         const headers = {};
         
