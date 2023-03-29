@@ -15,7 +15,7 @@
         <label class="form-label fs-6 fw-bold text-dark">Telefon Numarası</label>
         <Field
           tabindex="1"
-          class="form-control form-control-lg form-control-solid"
+          class="form-control form-control-lg"
           type="text"
           name="phone"
           autocomplete="off"
@@ -33,7 +33,7 @@
         </div>
         <Field
           tabindex="2"
-          class="form-control form-control-lg form-control-solid"
+          class="form-control form-control-lg"
           type="password"
           name="password"
           autocomplete="off"

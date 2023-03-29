@@ -24,7 +24,7 @@
         </div>
         <template v-for="(menuItem, j) in item.pages" :key="j">
           <template v-if="menuItem.heading">
-            <template v-if="menuItem.roles?.includes(authStore.getUser.role)">
+            <template v-if="menuItem.roles?.includes(authStore.getUser!.role)">
               <div class="menu-item">
                 <router-link
                   v-if="menuItem.route"

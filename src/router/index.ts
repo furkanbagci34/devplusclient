@@ -15,6 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/layouts/main-layout/MainLayout.vue"),
     meta: {
       middleware: "auth",
+      roles: {}
     },
     children: [
       {
@@ -24,6 +25,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           pageTitle: "Ana Sayfa",
           breadcrumbs: ["Dashboards"],
+          roles: {}
         },
       },
       {
@@ -34,7 +36,9 @@ const routes: Array<RouteRecordRaw> = [
           pageTitle: "Kullanıcılar",
           breadcrumbs: ["Kullanıcılar"],
           requiresAuth: true,
-          roles: ['admin']
+          roles: {
+            admin: true, 
+          }
         },
       },
       {
@@ -45,7 +49,9 @@ const routes: Array<RouteRecordRaw> = [
           pageTitle: "Kullanıcı Ekle",
           breadcrumbs: ["Kullanıcı Ekle"],
           requiresAuth: true,
-          roles: ['admin']
+          roles: {
+            admin: true, 
+          }
         },
       },
       {
@@ -56,7 +62,9 @@ const routes: Array<RouteRecordRaw> = [
           pageTitle: "Araç Tanımla",
           breadcrumbs: ["Araç Tanımla"],
           requiresAuth: true,
-          roles: ['admin']
+          roles: {
+            admin: true, 
+          }
         },
       },
       {
@@ -67,7 +75,9 @@ const routes: Array<RouteRecordRaw> = [
           pageTitle: "Araç Tanımla",
           breadcrumbs: ["Araç Tanımla"],
           requiresAuth: true,
-          roles: ['admin']
+          roles: {
+            admin: true, 
+          }
         },
       },
       {
@@ -78,7 +88,9 @@ const routes: Array<RouteRecordRaw> = [
           pageTitle: "Operasyon",
           breadcrumbs: ["Operasyon"],
           requiresAuth: true,
-          roles: ['admin']
+          roles: {
+            admin: true, 
+          }
         },
       }
     ],
@@ -94,6 +106,7 @@ const routes: Array<RouteRecordRaw> = [
           import("@/views/authentication/login/SignIn.vue"),
         meta: {
           pageTitle: "Giriş Yap",
+          roles: []
         },
       },
       {
@@ -103,6 +116,7 @@ const routes: Array<RouteRecordRaw> = [
           import("@/views/authentication/login/SignUp.vue"),
         meta: {
           pageTitle: "Kayıt Ol",
+          roles: []
         },
       }
     ],
@@ -117,6 +131,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/authentication/Error404.vue"),
         meta: {
           pageTitle: "Error 404",
+          roles: []
         },
       },
       {
@@ -125,6 +140,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/authentication/Error500.vue"),
         meta: {
           pageTitle: "Error 500",
+          roles: []
         },
       },
     ],
@@ -141,6 +157,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  console.log(to)
   const configStore = useConfigStore();
   const authStore = useAuthStore();
   const ApiService = new DevPlusApiService();
@@ -174,7 +191,7 @@ router.beforeEach(async (to, from, next) => {
   } else if (to.meta.middleware == "auth") {
     if (!authStore?.getUser?.isAuth) {
       next({ name: 'sign-in' })
-    } else if (to.meta.requiresAuth && to.meta.roles && to.meta.roles.indexOf(authStore.getUser.role) === -1) {
+    } else if (to.meta.requiresAuth && to.meta.roles && !to.meta.roles[(authStore.getUser.role)]) {
       next({ name: 'home' })
     } else {
       next()
