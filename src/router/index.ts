@@ -85,8 +85,34 @@ const routes: Array<RouteRecordRaw> = [
         name: "operation",
         component: () => import("@/views/operation.vue"),
         meta: {
-          pageTitle: "Operasyon",
+          pageTitle: "Operasyon Listesi",
           breadcrumbs: ["Operasyon"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
+        path: "/operationAdd",
+        name: "operationAdd",
+        component: () => import("@/views/operationAdd.vue"),
+        meta: {
+          pageTitle: "Operasyon Ekle",
+          breadcrumbs: ["operationAdd"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
+        path: "/operationEdit",
+        name: "operationEdit",
+        component: () => import("@/views/operationEdit.vue"),
+        meta: {
+          pageTitle: "Operasyon Güncelle",
+          breadcrumbs: ["operationEdit"],
           requiresAuth: true,
           roles: {
             admin: true, 
@@ -157,7 +183,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  console.log(to)
   const configStore = useConfigStore();
   const authStore = useAuthStore();
   const ApiService = new DevPlusApiService();

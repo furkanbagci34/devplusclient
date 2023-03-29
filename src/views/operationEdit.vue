@@ -1,8 +1,7 @@
 <template>
   <div class="row justify-content-end mb-4">
     <div class="col-md-3 col-sm-6 d-grid">
-      <button class="btn btn-success btn-sm" @click="$router.push('/operation')">
-        <span class="bi bi-arrow-return-left align-items-center fs-6"> Listeye Geri Dön</span></button>
+      <button class="btn btn-success btn-sm" @click="$router.push('/operation')">Listeye Geri Dön</button>
     </div>
   </div>
 
@@ -12,7 +11,6 @@
       class="form w-100"
       ref="signin"
       @submit="onSubmit"
-      :initial-values="{ name: ''}"
       >
       <div class="row mb-6">
         <div class="col-12">
@@ -32,22 +30,41 @@
         </div>
       </div>
 
-      <div class="text-center">
-        <button
-        tabindex="3"
-        type="submit"
-        ref="submitButton"
-        class="btn btn-lg btn-primary w-100"
-        >
-        <span class="indicator-label"> Kaydet </span>
-        <span class="indicator-progress">
-            Lütfen Bekleyin...
-            <span
-            class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span>
-        </span>
-        </button>
+      <div class="row">
+        <div class="col-6">
+          <button
+            tabindex="3"
+            type="submit"
+            ref="submitButton"
+            class="btn btn-lg btn-danger w-100 mb-5"
+            >
+            <span class="indicator-label"> Sil </span>
+            <span class="indicator-progress">
+                Lütfen Bekleyin...
+                <span
+                class="spinner-border spinner-border-sm align-middle ms-2"
+                ></span>
+            </span>
+            </button>
+        </div>
+        <div class="col-6">
+          <button
+            tabindex="3"
+            type="submit"
+            ref="submitButton"
+            class="btn btn-lg btn-primary w-100 mb-5"
+            >
+            <span class="indicator-label"> Kaydet </span>
+            <span class="indicator-progress">
+                Lütfen Bekleyin...
+                <span
+                class="spinner-border spinner-border-sm align-middle ms-2"
+                ></span>
+            </span>
+            </button>
+        </div>
       </div>
+
       </VForm>
     </div>
   </div>
