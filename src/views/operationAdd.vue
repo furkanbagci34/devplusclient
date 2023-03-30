@@ -76,7 +76,7 @@ export default defineComponent({
     const router = useRouter();
 
     const onSubmit = async (values: any) => {
-    const data = { name: parseInt(values.name) };
+    const data = { name: values.name };
     const Callback = await ApiService.Post("operation/create", data, JwtService.getToken());
     
     if (submitButton.value) {
