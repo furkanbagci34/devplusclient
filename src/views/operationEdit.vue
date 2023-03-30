@@ -106,16 +106,33 @@ export default defineComponent({
 
     const onSubmit = async (values: any) => {
     const data = { name: values.name, id: formData.value.id };
-    const Callback = await ApiService.Post("operation/update", data, JwtService.getToken());
+    const callback = await ApiService.Post("operation/update", data, JwtService.getToken());
     
     if (submitButton.value) {
       submitButton.value!.disabled = true;
       submitButton.value.setAttribute("data-kt-indicator", "on");
     }
 
-    if (Callback && Callback.success) {
+    await messageModal(callback);
+
+    submitButton.value?.removeAttribute("data-kt-indicator");
+    submitButton.value!.disabled = false;
+
+    router.push({ name: "operation" });
+    };
+
+    const deleteOperation = async () => {
+      const callback = await ApiService.Post("operation/delete", { id: formData.value.id }, JwtService.getToken());
+
+      await messageModal(callback);
+
+      router.push({ name: "operation" });
+    };
+
+    const messageModal = async(callback) => {
+      if (callback && callback.success) {
       Swal.fire({
-      text: "Operasyon başarıyla güncellendi.",
+      text: "İşleminiz başarıyla gerçekleştirildi.",
       icon: "success",
       buttonsStyling: false,
       confirmButtonText: "Tamam",
@@ -128,7 +145,7 @@ export default defineComponent({
       })
     } else {
       Swal.fire({
-        text: Callback.message as string,
+        text: callback.message as string,
         icon: "error",
         buttonsStyling: false,
         confirmButtonText: "Tamam",
@@ -138,18 +155,9 @@ export default defineComponent({
         },
       })
     }
+    }
 
-    submitButton.value?.removeAttribute("data-kt-indicator");
-    submitButton.value!.disabled = false;
-
-    router.push({ name: "operation" });
-    };
-
-    const deleteOperation = async () => {
-
-    };
-
-    return {
+    return {  
       onSubmit,
       submitButton,
       deleteOperation,
