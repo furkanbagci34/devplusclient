@@ -44,3 +44,11 @@ body {
 [data-theme="dark"] .splash-screen span {
     color: #92929F;
 }
+
+.el-select{
+    display: block !important;
+}
+.el-input__wrapper{
+    padding: 0.59rem 1.5rem !important;
+    border-radius: 10px !important
+}
