@@ -10,7 +10,6 @@
     <div class="d-flex flex-stack flex-grow-1 w-lg-500px p-5 col-2">
       <VForm
       class="form w-100"
-      ref="signin"
       @submit="onSubmit"
       :initial-values="{ name: ''}"
       >
@@ -77,7 +76,7 @@ export default defineComponent({
     const router = useRouter();
 
     const onSubmit = async (values: any) => {
-    const data = { name: values.name };
+    const data = { name: parseInt(values.name) };
     const Callback = await ApiService.Post("operation/create", data, JwtService.getToken());
     
     if (submitButton.value) {

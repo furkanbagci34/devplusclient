@@ -31,8 +31,8 @@ const MainMenuConfig: Array<MenuItem> = [
         roles: ["admin"]
       },
       {
-        heading: "Araç Tanımla",
-        route: "/vehicleAdd",
+        heading: "Araçlar",
+        route: "/vehicles",
         fontIcon: "bi-car-front-fill",
         roles: ["admin"]
       },
