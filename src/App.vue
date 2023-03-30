@@ -22,10 +22,6 @@ export default defineComponent({
     const bodyStore = useBodyStore();
 
     onBeforeMount(() => {
-      /**
-       * Overrides the layout config using saved data from localStorage
-       * remove this to use static config (@/core/config/DefaultLayoutConfig.ts)
-       */
       configStore.overrideLayoutConfig();
 
       themeStore.setThemeMode(themeMode.value);

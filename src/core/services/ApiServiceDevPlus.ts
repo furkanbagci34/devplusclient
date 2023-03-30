@@ -13,8 +13,9 @@ export default class DevPlusApiService
         try {
             const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}`+ url, data, { headers });
             return response.data;
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err);
+            return err;
         }
     }
 }

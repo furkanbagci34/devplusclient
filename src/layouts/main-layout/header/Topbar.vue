@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex align-items-stretch overflow-auto pt-3 pt-lg-0">
+  <div class="d-flex align-items-stretch overflow-auto py-0">
     <div class="d-flex align-items-center">
-      <a
+      <!-- <a
         href="#"
         class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary"
         data-kt-menu-trigger="{default:'click', lg: 'hover'}"
@@ -18,7 +18,7 @@
             :src="getAssetPath('media/icons/duotune/general/gen061.svg')"
           />
         </span>
-      </a>
+      </a> -->
       <KTThemeModeSwitcher></KTThemeModeSwitcher>
     </div>
   </div>
