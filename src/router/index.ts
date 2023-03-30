@@ -55,6 +55,19 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/vehicles",
+        name: "vehicles",
+        component: () => import("@/views/vehicles.vue"),
+        meta: {
+          pageTitle: "Araçlar",
+          breadcrumbs: ["Araçlar"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
         path: "/vehicleAdd",
         name: "vehicleAdd",
         component: () => import("@/views/vehicleAdd.vue"),

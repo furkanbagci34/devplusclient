@@ -13,7 +13,6 @@
       :selection="{ mode: 'single' }"
       :show-borders="true"
       :hover-state-enabled="true"
-      key-expr="id"
       >
 
       <DxColumn data-field="id" caption="Id" alignment="center" width="75" />
