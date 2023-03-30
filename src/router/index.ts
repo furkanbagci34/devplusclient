@@ -107,7 +107,7 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/operationEdit",
+        path: "/operationEdit/:id",
         name: "operationEdit",
         component: () => import("@/views/operationEdit.vue"),
         meta: {

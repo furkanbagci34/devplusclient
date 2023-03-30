@@ -7,7 +7,7 @@
   </div>
 
   <div class="row">
-    <div class="d-flex flex-stack flex-grow-1 w-lg-500px p-5 col-2">
+    <div class="d-flex flex-stack flex-grow-1 w-lg-500px col-2">
       <VForm
       class="form w-100"
       ref="signin"
