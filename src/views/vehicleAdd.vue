@@ -7,17 +7,17 @@
   </div>
   <div class="row">
     <VForm
-      class="form w-100"
       @submit="onSubmit"
       :validation-schema="vehicleShema"
+      :initial-values="{ brand: '', model: ''}"
       >
       <div class="card-body">
-        <div class="row mb-6">
+        <div class="row">
           <div class="col-md-6 col-sm-12">
               <label class="form-label fs-6 fw-bold text-dark">Marka</label>
               <Field
                   tabindex="1"
-                  class="form-control form-control-lg"
+                  class="form-control form-control"
                   type="text"
                   name="brand"
                   autocomplete="off"
@@ -27,19 +27,19 @@
               <label class="form-label fs-6 fw-bold text-dark">Model</label>
               <Field
                   tabindex="1"
-                  class="form-control form-control-lg"
+                  class="form-control form-control"
                   type="text"
                   name="model"
                   autocomplete="off"
               />
           </div>
         </div>
-        <div class="row mb-10">
+        <div class="row">
           <div class="col-md-6 col-sm-4">
             <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
             <Field
               tabindex="1"
-              class="form-control form-control-lg"
+              class="form-control form-control"
               type="text"
               name="numberPlate"
               autocomplete="off"
@@ -52,7 +52,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
-            <el-select v-model="user" filterable placeholder="Seçim yapınız">
+            <el-select v-model="userId" filterable placeholder="Seçim yapınız">
               <el-option
               v-for="item in userList"
               :key="item.id"
@@ -62,16 +62,15 @@
             </el-select>
           </div>
         </div>
-        <div class="row mb-10">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <label class="form-label fs-6 fw-bold text-dark">Not</label>
-            <Field
-                tabindex="1"
-                class="form-control form-control-lg"
-                type="text"
-                name="note"
-                autocomplete="off"
-            />
+            <textarea
+              tabindex="1"
+              class="form-control"
+              name="note"
+              autocomplete="off"
+            ></textarea>
           </div>
         </div>
         <div class="row">
@@ -79,10 +78,14 @@
             <el-transfer
               class="btn btn-white col-12"
               v-model="elTransfervalue"
-              :titles="elTransferTitle"
+              filterable
+              :filter-method="filterMethod"
+              filter-placeholder="Arama"
+              :titles="['Kaynak', 'Hedef']"
+              :button-texts="['Çıkar', 'Ekle']"
               :props="{
                 key: 'value',
-                label: 'desc',
+                label: 'name',
               }"
               :data="elTransferData"
             />
@@ -128,16 +131,17 @@ export default defineComponent({
   },
   setup () {
     const ApiService = new DevPlusApiService();
-    const user = ref('')
+    const userId = ref();
     const userList = ref();
     const numberPlate = /^(0[1-9]|[1-7][0-9]|8[01])((\s?[a-zA-Z]\s?)(\d{4,5})|(\s?[a-zA-Z]{2}\s?)(\d{3,4})|(\s?[a-zA-Z]{3}\s?)(\d{2,3}))$/
     const submitButton = ref<HTMLButtonElement | null>(null);
-    const tabIndex = ref(0);
     const elTransfervalue = ref([]);
-    const elTransferTitle = ["Bekleyen","Atanan"];
+    let vehicleId = -1;
     let elTransferData = ref<any>();
 
     const vehicleShema = Yup.object().shape({
+      brand: Yup.string().required().label("Marka"),
+      model: Yup.string().required().label("Model"),
       numberPlate: Yup.string().matches(numberPlate, 'Lütfen geçerli plaka giriniz').label("Plaka Numarası"),
     });
 
@@ -149,23 +153,23 @@ export default defineComponent({
     });
 
     const onSubmit = async (values: any) => {
-      const data =
-      {
+      const vehicleData = {
         brand: values.brand,
         model: values.model,
         numberPlate: values.numberPlate,
-        userId: user.value,
-        note: values.note
+        userId: userId.value,
       }
 
-      const Callback = await ApiService.Post("vehicle/create", data, JwtService.getToken());
+      const Callback = await ApiService.Post("vehicle/create", vehicleData, JwtService.getToken());
+
+      console.log(Callback)
 
       if (submitButton.value) {
         submitButton.value!.disabled = true;
         submitButton.value.setAttribute("data-kt-indicator", "on");
       }
 
-      if (Callback.success) {
+      if (Callback && Callback.success) {
         Swal.fire({
           text: "Araç başarıyla kaydedildi.",
           icon: "success",
@@ -173,10 +177,8 @@ export default defineComponent({
           confirmButtonText: "Tamam",
           heightAuto: false,
           customClass: {
-              confirmButton: "btn fw-semobold btn-light-primary",
+            confirmButton: "btn fw-semobold btn-light-primary",
           },
-        }).then(() => {
-
         })
       } else {
         Swal.fire({
@@ -186,7 +188,7 @@ export default defineComponent({
           confirmButtonText: "Tamam",
           heightAuto: false,
           customClass: {
-              confirmButton: "btn fw-semobold btn-light-danger",
+            confirmButton: "btn fw-semobold btn-light-danger",
           },
         })
       }
@@ -199,24 +201,28 @@ export default defineComponent({
       const result = await ApiService.Post("operation/get", { id: -1 }, JwtService.getToken());
       const operationData = result.body;
 
-      const tmpData = operationData.map(operation => ({
-        value: operation.id,
-        desc: operation.name + "-" + operation.id,
-        disabled: false
+      const tmpData = operationData.map((operation, index) => ({
+        value: index,
+        name: operation.name,
+        disabled: false,
       }));
 
       elTransferData.value = tmpData;
     }
 
+    const filterMethod = (query, item) => {
+      return item.name.toLowerCase().includes(query.toLowerCase())
+    }
+
     return{
-      user,
+      userId,
       userList,
       onSubmit,
       vehicleShema,
       submitButton,
       elTransferData,
       elTransfervalue,
-      elTransferTitle
+      filterMethod
     }
   }
 })
