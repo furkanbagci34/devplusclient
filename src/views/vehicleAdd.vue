@@ -6,7 +6,7 @@
       class="form w-100"
       @submit="onSubmit"
       :validation-schema="vehicleShema"
-      :initial-values="{ brand: '', model: '', note: '', licencePalette: '', user: '1' }"
+      :initial-values="{ brand: '', model: '', note: '', numberPlate: '', user: '1' }"
       >
 
         <div class="row mb-6">
@@ -39,12 +39,12 @@
               tabindex="1"
               class="form-control form-control-lg"
               type="text"
-              name="licencePalette"
+              name="numberPlate"
               autocomplete="off"
             /> 
             <div class="fv-plugins-message-container">
               <div class="fv-help-block">
-                <ErrorMessage name="licencePalette" />
+                <ErrorMessage name="numberPlate" />
               </div>
             </div>
           </div>
@@ -118,11 +118,11 @@ export default defineComponent({
     const ApiService = new DevPlusApiService();
     const user = ref('')
     const userList = ref();
-    const licencePalette = /^(0[1-9]|[1-7][0-9]|8[01])((\s?[a-zA-Z]\s?)(\d{4,5})|(\s?[a-zA-Z]{2}\s?)(\d{3,4})|(\s?[a-zA-Z]{3}\s?)(\d{2,3}))$/
+    const numberPlate = /^(0[1-9]|[1-7][0-9]|8[01])((\s?[a-zA-Z]\s?)(\d{4,5})|(\s?[a-zA-Z]{2}\s?)(\d{3,4})|(\s?[a-zA-Z]{3}\s?)(\d{2,3}))$/
     const submitButton = ref<HTMLButtonElement | null>(null);
 
     const vehicleShema = Yup.object().shape({
-      licencePalette: Yup.string().matches(licencePalette, 'Lütfen geçerli plaka giriniz').label("Plaka Numarası"),
+      numberPlate: Yup.string().matches(numberPlate, 'Lütfen geçerli plaka giriniz').label("Plaka Numarası"),
     });
 
     onMounted(async () => {
@@ -136,7 +136,7 @@ export default defineComponent({
       {
         brand: values.brand,
         model: values.model,
-        numberPlate: values.licencePalette,
+        numberPlate: values.numberPlate,
         userId: user.value,
         note: values.note
       }

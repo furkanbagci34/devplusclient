@@ -20,11 +20,14 @@
     <DxColumn data-field="isEnabled" caption="Durum" data-type="boolean"/>
 
     <DxPaging :page-size="10"/>
-    <DxSelection
-      :select-all-mode="allMode"
-      :show-check-boxes-mode="checkBoxesMode"
-      mode="single"
-    />
+    <DxColumn type="buttons" caption="İşlemler">
+      <DxButton 
+        text="Düzenle"
+        icon="/media/icons/duotune/general/gen055.svg"
+        hint="Düzenle"
+        @click="onEditClick"
+      />
+    </DxColumn>
     <DxFilterRow :visible="true"/>
   </DxDataGrid>
   </div>
@@ -35,8 +38,9 @@
 import { defineComponent, onMounted, ref } from "vue";
 import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
 import JwtService from "@/core/services/JwtService";
-import { DxDataGrid, DxColumn, DxPaging, DxSelection, DxFilterRow, DxScrolling } from 'devextreme-vue/data-grid';
+import { DxDataGrid, DxColumn, DxPaging, DxFilterRow, DxScrolling, DxButton } from 'devextreme-vue/data-grid';
 import themes from 'devextreme/ui/themes';
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "users",
@@ -44,12 +48,18 @@ export default defineComponent({
     DxDataGrid,
     DxColumn,
     DxPaging,
-    DxSelection,
     DxFilterRow,
-    DxScrolling
+    DxScrolling,
+    DxButton
+  },
+  methods: {
+    onEditClick(e) {
+      this.router.push({ name: 'userEdit', params: { id: e.row.data.userId }});
+    },
   },
   setup () {
     const ApiService = new DevPlusApiService();
+    const router = useRouter();
     const userList = ref([]);
 
     onMounted(async () => {
@@ -61,6 +71,7 @@ export default defineComponent({
       userList,
       allMode: 'allPages',
       checkBoxesMode: themes.current().startsWith('material') ? 'always' : 'onClick',
+      router
     };
   }
 });

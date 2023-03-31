@@ -55,6 +55,19 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/userEdit/:id",
+        name: "userEdit",
+        component: () => import("@/views/userEdit.vue"),
+        meta: {
+          pageTitle: "Kullanıcı Düzenle",
+          breadcrumbs: ["Kullanıcı Düzenle"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
         path: "/vehicles",
         name: "vehicles",
         component: () => import("@/views/vehicles.vue"),
@@ -81,12 +94,25 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/vehicleEdit/:id",
+        name: "vehicleEdit",
+        component: () => import("@/views/vehicleEdit.vue"),
+        meta: {
+          pageTitle: "Araç Güncelle",
+          breadcrumbs: ["vehicleEdit"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
         path: "/myVehicle",
         name: "myVehicle",
         component: () => import("@/views/myVehicle.vue"),
         meta: {
-          pageTitle: "Araç Tanımla",
-          breadcrumbs: ["Araç Tanımla"],
+          pageTitle: "Araçlarım",
+          breadcrumbs: ["Araçlarım"],
           requiresAuth: true,
           roles: {
             admin: true, 

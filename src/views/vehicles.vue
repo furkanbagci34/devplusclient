@@ -59,7 +59,7 @@
     },
     methods: {
       onEditClick(e) {
-        this.router.push({ name: 'operationEdit', params: { id: e.row.data.id }});
+        this.router.push({ name: 'vehicleEdit', params: { id: e.row.data.vehicleId }});
       },
     },
     setup () {
