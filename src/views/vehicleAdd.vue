@@ -6,166 +6,104 @@
     </div>
   </div>
   <div class="row">
-
-    <div class="card">
-      <div class="card-header card-header-stretch">
-        <ul
-          class="nav nav-stretch nav-line-tabs fw-semobold border-0"
-          role="tablist"
-          id="kt_layout_builder_tabs"
-          ref="kt_layout_builder_tabs"
-        >
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              :class="{ active: tabIndex === 0 }"
-              data-bs-toggle="tab"
-              data-tab-index="0"
-              role="tab"
-              @click="setActiveTab($event)"
-            >
-              Araç Bilgileri
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              :class="{ active: tabIndex === 1 }"
-              data-bs-toggle="tab"
-              data-tab-index="1"
-              role="tab"
-              @click="setActiveTab($event)"
-              :initial-values="{ name: '', surname: '', mobilePhone: '', email: '' }"
-            >
-              Operasyonlar
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <VForm
       class="form w-100"
       @submit="onSubmit"
       :validation-schema="vehicleShema"
       >
       <div class="card-body">
-        <div class="tab-content" id="kt_tabs">
-          <div
-            class="tab-pane"
-            :class="{ active: tabIndex === 0 }"
-          >
-            <div class="row mb-6">
-              <div class="col-md-6 col-sm-12">
-                  <label class="form-label fs-6 fw-bold text-dark">Marka</label>
-                  <Field
-                      tabindex="1"
-                      class="form-control form-control-lg"
-                      type="text"
-                      name="brand"
-                      autocomplete="off"
-                  />
-              </div>
-              <div class="col-md-6 col-sm-12">
-                  <label class="form-label fs-6 fw-bold text-dark">Model</label>
-                  <Field
-                      tabindex="1"
-                      class="form-control form-control-lg"
-                      type="text"
-                      name="model"
-                      autocomplete="off"
-                  />
-              </div>
-            </div>
-            <div class="row mb-10">
-              <div class="col-md-6 col-sm-4">
-                <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
-                <Field
+        <div class="row mb-6">
+          <div class="col-md-6 col-sm-12">
+              <label class="form-label fs-6 fw-bold text-dark">Marka</label>
+              <Field
                   tabindex="1"
                   class="form-control form-control-lg"
                   type="text"
-                  name="numberPlate"
+                  name="brand"
                   autocomplete="off"
-                /> 
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="numberPlate" />
-                  </div>
-                </div>
+              />
+          </div>
+          <div class="col-md-6 col-sm-12">
+              <label class="form-label fs-6 fw-bold text-dark">Model</label>
+              <Field
+                  tabindex="1"
+                  class="form-control form-control-lg"
+                  type="text"
+                  name="model"
+                  autocomplete="off"
+              />
+          </div>
+        </div>
+        <div class="row mb-10">
+          <div class="col-md-6 col-sm-4">
+            <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
+            <Field
+              tabindex="1"
+              class="form-control form-control-lg"
+              type="text"
+              name="numberPlate"
+              autocomplete="off"
+            /> 
+            <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                <ErrorMessage name="numberPlate" />
               </div>
-              <div class="col-md-6 col-sm-12">
-                <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
-                <el-select v-model="user" filterable placeholder="Seçim yapınız">
-                  <el-option
-                  v-for="item in userList"
-                  :key="item.id"
-                  :label="`${item.name} ${item.surname}`"
-                  :value="item.id"
-                  />
-                </el-select>
-              </div>
-            </div>
-            <div class="row mb-10">
-              <div class="col-md-12 col-sm-12">
-                <label class="form-label fs-6 fw-bold text-dark">Not</label>
-                <Field
-                    tabindex="1"
-                    class="form-control form-control-lg"
-                    type="text"
-                    name="note"
-                    autocomplete="off"
-                />
-              </div>
-            </div>
-            <div class="text-center">
-              <button
-              tabindex="3"
-              type="submit"
-              ref="submitButton"
-              class="btn btn-primary col-12 d-grid"
-              >
-              <span class="indicator-label"> Kaydet </span>
-
-              <span class="indicator-progress">
-                Lütfen Bekleyin...
-                <span
-                class="spinner-border spinner-border-sm align-middle ms-2"
-                ></span>
-              </span>
-              </button>
             </div>
           </div>
-          <div
-            class="tab-pane"
-            :class="{ active: tabIndex === 1 }"
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
+            <el-select v-model="user" filterable placeholder="Seçim yapınız">
+              <el-option
+              v-for="item in userList"
+              :key="item.id"
+              :label="`${item.name} ${item.surname}`"
+              :value="item.id"
+              />
+            </el-select>
+          </div>
+        </div>
+        <div class="row mb-10">
+          <div class="col-md-12 col-sm-12">
+            <label class="form-label fs-6 fw-bold text-dark">Not</label>
+            <Field
+                tabindex="1"
+                class="form-control form-control-lg"
+                type="text"
+                name="note"
+                autocomplete="off"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <el-transfer
+              class="btn btn-white col-12"
+              v-model="elTransfervalue"
+              :titles="elTransferTitle"
+              :props="{
+                key: 'value',
+                label: 'desc',
+              }"
+              :data="elTransferData"
+            />
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+          tabindex="3"
+          type="submit"
+          ref="submitButton"
+          class="btn btn-primary col-12 d-grid"
           >
-            <div class="row">
-              <div class="col-12">
-                <el-transfer
-                  class="btn btn-white col-12"
-                  v-model="elTransfervalue"
-                  :titles="elTransferTitle"
-                  :props="{
-                    key: 'value',
-                    label: 'desc',
-                  }"
-                  :data="elTransferData"
-                />
-              </div>
-            </div>
-            <div class="row pt-1">
-              <div class="col-12 d-grid">
-                <button
-                tabindex="3"
-                type="submit"
-                ref="submitButton"
-                class="btn btn-primary"
-                >
-                <span class="indicator-label"> Kaydet </span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <span class="indicator-label"> Kaydet </span>
+
+          <span class="indicator-progress">
+            Lütfen Bekleyin...
+            <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </span>
+          </button>
         </div>
       </div>
     </VForm>
@@ -206,11 +144,11 @@ export default defineComponent({
     onMounted(async () => {
       const userData = await ApiService.Post("user/get", { userId: -1 }, JwtService.getToken());
       userList.value = userData.body;
-      tabIndex.value = 0;
+
+      await operationProcess();
     });
 
     const onSubmit = async (values: any) => {
-
       const data =
       {
         brand: values.brand,
@@ -257,13 +195,7 @@ export default defineComponent({
       submitButton.value!.disabled = false;
     }
 
-    const setActiveTab = async (event: any) => {
-      tabIndex.value = parseInt(event.target.getAttribute("data-tab-index"));
-
-      if (tabIndex.value !== 1) {
-        return;
-      }
-
+    const operationProcess = async() => {
       const result = await ApiService.Post("operation/get", { id: -1 }, JwtService.getToken());
       const operationData = result.body;
 
@@ -274,16 +206,14 @@ export default defineComponent({
       }));
 
       elTransferData.value = tmpData;
-    };
-    
+    }
+
     return{
       user,
       userList,
       onSubmit,
       vehicleShema,
       submitButton,
-      tabIndex,
-      setActiveTab,
       elTransferData,
       elTransfervalue,
       elTransferTitle
