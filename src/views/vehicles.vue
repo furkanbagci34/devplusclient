@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-end mb-4">
-      <div class="col-3 d-grid">
+      <div class="col-md-3 col-sm-6 d-grid">
         <button class="btn btn-success btn-sm" @click="$router.push('/vehicleAdd')">
           <span class="bi bi-plus align-items-center fs-6"> Araç Tanımla</span>   
         </button>

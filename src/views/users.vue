@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-end mb-4">
-    <div class="col-3 d-grid">
+    <div class="col-md-3 col-sm-6 d-grid">
       <button class="btn btn-success btn-sm" @click="$router.push('/userAdd')">
         <span class="bi bi-plus align-items-center fs-6"> Kullanıcı Ekle</span>   
       </button>
@@ -17,7 +17,6 @@
     <DxColumn data-field="surname" caption="Soyad" />
     <DxColumn data-field="mobilePhone" caption="Telefon" />
     <DxColumn data-field="email" caption="E-Mail" :width="220"/>
-    <DxColumn data-field="isEnabled" caption="Durum" data-type="boolean"/>
 
     <DxPaging :page-size="10"/>
     <DxColumn type="buttons" caption="İşlemler">
@@ -54,7 +53,7 @@ export default defineComponent({
   },
   methods: {
     onEditClick(e) {
-      this.router.push({ name: 'userEdit', params: { id: e.row.data.userId }});
+      this.router.push({ name: 'userEdit', params: { id: e.row.data.id }});
     },
   },
   setup () {

@@ -1,4 +1,10 @@
 <template>
+  <div class="row justify-content-end mb-4">
+    <div class="col-md-3 col-sm-6 d-grid">
+      <button class="btn btn-success btn-sm" @click="$router.push('/vehicles')">
+        <span class="bi bi-arrow-return-left align-items-center fs-6"> Listeye Geri Dön</span></button>
+    </div>
+  </div>
   <div class="row">
 
     <div class="card">

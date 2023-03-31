@@ -1,4 +1,11 @@
 <template>
+  <div class="row justify-content-end mb-4">
+    <div class="col-md-3 col-sm-6 d-grid">
+      <button class="btn btn-success btn-sm" @click="$router.push('/users')">
+        <span class="bi bi-arrow-return-left align-items-center fs-6"> Listeye Geri Dön</span></button>
+    </div>
+  </div>
+
   <div class="row">
 
     <div class="d-flex flex-stack flex-grow-1 w-lg-500px p-5 col-2">
@@ -100,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
 import JwtService from "@/core/services/JwtService";
 import { ErrorMessage, Field, Form as VForm } from "vee-validate";
@@ -116,72 +123,71 @@ export default defineComponent({
         ErrorMessage,
     },
     setup() {
-        Yup.setLocale(tr)
-        const ApiService = new DevPlusApiService();
+      Yup.setLocale(tr)
+      const ApiService = new DevPlusApiService();
 
-        const submitButton = ref<HTMLButtonElement | null>(null);
-        const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+      const submitButton = ref<HTMLButtonElement | null>(null);
+      const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-        const login = Yup.object().shape({
-            name: Yup.string().required().label("Ad"),
-            surname: Yup.string().required().label("Soyad"),
-            mobilePhone: Yup.string().matches(phoneRegExp, 'Lütfen geçerli numara giriniz').label("Telefon Numarası"),
-            email: Yup.string().required().label("Soyad"),
-        });
+      const login = Yup.object().shape({
+        name: Yup.string().required().label("Ad"),
+        surname: Yup.string().required().label("Soyad"),
+        mobilePhone: Yup.string().matches(phoneRegExp, 'Lütfen geçerli numara giriniz').label("Telefon Numarası"),
+        email: Yup.string().required().label("Soyad"),
+      });
 
-        const onSubmitLogin = async (values: any) => {
-            
-            const data =
-            {
-                name: values.name,
-                surname: values.surname,
-                mobilePhone: values.mobilePhone,
-                email: values.email,
-                password: "test"
-            }
-
-            const Callback = await ApiService.Post("user/signin", data, JwtService.getToken());
-
-            if (submitButton.value) {
-                submitButton.value!.disabled = true;
-                submitButton.value.setAttribute("data-kt-indicator", "on");
-            }
-
-            if (Callback.success) {
-                Swal.fire({
-                    text: "Kullanıcı başarıyla kaydedildi.",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Tamam",
-                    heightAuto: false,
-                    customClass: {
-                        confirmButton: "btn fw-semobold btn-light-primary",
-                    },
-                }).then(() => {
-
-                })
-            } else {
-                Swal.fire({
-                    text: Callback.message as string,
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Tamam",
-                    heightAuto: false,
-                    customClass: {
-                        confirmButton: "btn fw-semobold btn-light-danger",
-                    },
-                })
-            }
-
-            submitButton.value?.removeAttribute("data-kt-indicator");
-            submitButton.value!.disabled = false;
-        };
+      const onSubmitLogin = async (values: any) => {
+        const data =
+        {
+          name: values.name,
+          surname: values.surname,
+          mobilePhone: values.mobilePhone,
+          email: values.email,
+          password: "test"
+        }
         
-        return {
-            onSubmitLogin,
-            login,
-            submitButton,
-        };
+        const Callback = await ApiService.Post("user/signin", data, JwtService.getToken());
+
+        if (submitButton.value) {
+          submitButton.value!.disabled = true;
+          submitButton.value.setAttribute("data-kt-indicator", "on");
+        }
+
+        if (Callback.success) {
+            Swal.fire({
+                text: "Kullanıcı başarıyla kaydedildi.",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Tamam",
+                heightAuto: false,
+                customClass: {
+                    confirmButton: "btn fw-semobold btn-light-primary",
+                },
+            }).then(() => {
+
+            })
+        } else {
+            Swal.fire({
+                text: Callback.message as string,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Tamam",
+                heightAuto: false,
+                customClass: {
+                    confirmButton: "btn fw-semobold btn-light-danger",
+                },
+            })
+        }
+
+        submitButton.value?.removeAttribute("data-kt-indicator");
+        submitButton.value!.disabled = false;
+      };
+      
+      return {
+        onSubmitLogin,
+        login,
+        submitButton,
+      };
     }
 })
 
