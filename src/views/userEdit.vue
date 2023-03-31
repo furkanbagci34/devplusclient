@@ -14,23 +14,86 @@
         @submit="onSubmit"
         >
         <div class="row mb-6">
-          <div class="col-12">
-            <label class="form-label fs-6 fw-bold text-dark">Operasyon Adı</label>
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label fs-6 fw-bold text-dark">Ad</label>
             <Field
               tabindex="1"
               class="form-control form-control-lg"
               type="text"
               name="name"
               autocomplete="off"
+              show-password
               v-model.trim="formData.name"
             />
             <div class="fv-plugins-message-container">
               <div class="fv-help-block">
-                <ErrorMessage name="name" />
+                  <ErrorMessage name="name" />
               </div>
             </div>
           </div>
-        </div>
+          <div class="col-md-6 col-sm-12">
+            <label class="form-label fs-6 fw-bold text-dark">Soyad</label>
+            <Field
+              tabindex="1"
+              class="form-control form-control-lg"
+              type="text"
+              name="surname"
+              autocomplete="off"
+              v-model.trim="formData.surname"
+            />
+            <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                  <ErrorMessage name="surname" />
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="row mb-10">
+          <div class="col-md-6 col-sm-12">
+              <label class="form-label fs-6 fw-bold text-dark">Telefon Numarası</label>
+              <Field
+                tabindex="1"
+                class="form-control form-control-lg"
+                type="text"
+                name="mobilePhone"
+                autocomplete="off"
+                v-model.trim="formData.mobilePhone"
+              />
+              <div class="fv-plugins-message-container">
+                  <div class="fv-help-block">
+                      <ErrorMessage name="mobilePhone" />
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+              <label class="form-label fs-6 fw-bold text-dark">E-Mail</label>
+              <Field
+                tabindex="1"
+                class="form-control form-control-lg"
+                type="text"
+                name="email"
+                autocomplete="off"
+                v-model.trim="formData.email"
+              />
+              <div class="fv-plugins-message-container">
+                  <div class="fv-help-block">
+                      <ErrorMessage name="email" />
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row mb-10">
+          <div class="col-md-6 col-sm-12">
+              <label class="form-label fs-6 fw-bold text-dark">Şifre</label>
+              <el-input
+                v-model.trim="formData.userPassword"
+                type="password"
+                show-password
+              />
+          </div>
+      </div>
   
         <div class="row">
           <div class="col-6">
@@ -95,18 +158,25 @@
       const submitButton = ref<HTMLButtonElement | null>(null);
       const router = useRouter();
       const route = useRoute();
-      const formData = ref({ name: '', id: 0 });
+      const formData = ref({ name: '', surname: '', mobilePhone: '', email: '', id: '', userPassword: ''});
   
       onMounted(async () => {
         const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("user/get", { userId: id }, JwtService.getToken());
+
         formData.value.name = data.body[0].name;
+        formData.value.surname = data.body[0].surname;
+        formData.value.mobilePhone = data.body[0].mobilePhone;
+        formData.value.email = data.body[0].email;
         formData.value.id = data.body[0].id;
+        formData.value.userPassword = data.body[0].userPassword;
       });
   
       const onSubmit = async (values: any) => {
-      const data = { name: values.name, id: formData.value.id };
-      const callback = await ApiService.Post("operation/update", data, JwtService.getToken());
+      const data = { name: formData.value.name, surname: formData.value.surname, mobilePhone: formData.value.mobilePhone, 
+                     email: formData.value.email, userId: formData.value.id, password: formData.value.userPassword, isEnabled: 1 };
+
+      const callback = await ApiService.Post("user/update", data, JwtService.getToken());
       
       if (submitButton.value) {
         submitButton.value!.disabled = true;
@@ -118,15 +188,15 @@
       submitButton.value?.removeAttribute("data-kt-indicator");
       submitButton.value!.disabled = false;
   
-      router.push({ name: "operation" });
+      router.push({ name: "users" });
       };
   
       const deleteUser = async () => {
-        const callback = await ApiService.Post("operation/delete", { id: formData.value.id }, JwtService.getToken());
+        const callback = await ApiService.Post("user/delete", { userId: formData.value.id }, JwtService.getToken());
   
         await messageModal(callback);
   
-        router.push({ name: "operation" });
+        router.push({ name: "users" });
       };
   
       const messageModal = async(callback) => {

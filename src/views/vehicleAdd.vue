@@ -1,4 +1,10 @@
 <template>
+  <div class="row justify-content-end mb-4">
+    <div class="col-md-3 col-sm-6 d-grid">
+      <button class="btn btn-success btn-sm" @click="$router.push('/vehicles')">
+        <span class="bi bi-arrow-return-left align-items-center fs-6"> Listeye Geri Dön</span></button>
+    </div>
+  </div>
   <div class="row">
     <div class="d-flex flex-stack flex-grow-1 w-lg-500px p-5">
 
@@ -75,21 +81,21 @@
         </div>
 
         <div class="text-center">
-            <button
-            tabindex="3"
-            type="submit"
-            ref="submitButton"
-            class="btn btn-lg btn-primary w-100 mb-5"
-            >
-            <span class="indicator-label"> Kaydet </span>
+          <button
+          tabindex="3"
+          type="submit"
+          ref="submitButton"
+          class="btn btn-lg btn-primary w-100 mb-5"
+          >
+          <span class="indicator-label"> Kaydet </span>
 
-            <span class="indicator-progress">
-                Lütfen Bekleyin...
-                <span
-                class="spinner-border spinner-border-sm align-middle ms-2"
-                ></span>
-            </span>
-            </button>
+          <span class="indicator-progress">
+              Lütfen Bekleyin...
+              <span
+              class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span>
+          </span>
+          </button>
         </div>
 
       </VForm>
