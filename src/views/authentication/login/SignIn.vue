@@ -7,14 +7,14 @@
       :validation-schema="login"
       :initial-values="{ phone: '', password: '' }"
     >
-      <div class="text-center mb-10">
-        <h1 class="text-dark mb-3">Giriş Yap</h1>
-      </div>
-
-      <div class="fv-row mb-10">
+    <div class="text-center mb-10">
+      <h1 class="text-dark mb-3">Giriş Yap</h1>
+    </div>
+    
+    <div class="fv-row row mb-10">
         <label class="form-label fs-6 fw-bold text-dark">Telefon Numarası</label>
         <Field
-          tabindex="1"
+        tabindex="1"
           class="form-control form-control-lg"
           type="text"
           name="phone"
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="fv-row mb-10">
+      <div class="fv-row row mb-10">
         <div class="d-flex flex-stack mb-2">
           <label class="form-label fw-bold text-dark fs-6 mb-0">Şifre</label>
         </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="text-center">
+      <div class="text-center row">
         <button
           tabindex="3"
           type="submit"
