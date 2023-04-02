@@ -9,7 +9,7 @@
     <VForm
       @submit="onSubmit"
       :validation-schema="vehicleShema"
-      :initial-values="{ brand: '', model: ''}"
+      :initial-values="{ brand: 'Mercedes', model: 'Vito', note: '', numberPlate: ''}"
       >
       <div class="card-body">
         <div class="row">
@@ -22,6 +22,11 @@
                   name="brand"
                   autocomplete="off"
               />
+              <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                <ErrorMessage name="brand" />
+              </div>
+            </div>
           </div>
           <div class="col-md-6 col-sm-12">
               <label class="form-label fs-6 fw-bold text-dark">Model</label>
@@ -32,6 +37,11 @@
                   name="model"
                   autocomplete="off"
               />
+              <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                <ErrorMessage name="model" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -66,11 +76,12 @@
           <div class="col-md-12 col-sm-12">
             <label class="form-label fs-6 fw-bold text-dark">Not</label>
             <textarea
-              tabindex="1"
-              class="form-control"
-              name="note"
-              autocomplete="off"
-            ></textarea>
+            tabindex="1"
+            v-model="note"
+            type="text"
+            class="form-control form-control"
+            autocomplete="off"
+          ></textarea>
           </div>
         </div>
         <div class="row">
@@ -98,14 +109,7 @@
           ref="submitButton"
           class="btn btn-primary col-12 d-grid"
           >
-          <span class="indicator-label"> Kaydet </span>
-
-          <span class="indicator-progress">
-            Lütfen Bekleyin...
-            <span
-            class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span>
-          </span>
+          Kaydet
           </button>
         </div>
       </div>
@@ -120,7 +124,9 @@ import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
 import JwtService from "@/core/services/JwtService";
 import { ErrorMessage, Field, Form as VForm } from "vee-validate";
 import * as Yup from "yup";
+import { tr } from 'yup-locales';
 import Swal from "sweetalert2";
+import { useRouter  } from "vue-router";
 
 export default defineComponent({
   name: "vehicleAdd",
@@ -130,19 +136,20 @@ export default defineComponent({
     ErrorMessage
   },
   setup () {
+    Yup.setLocale(tr)
     const ApiService = new DevPlusApiService();
     const userId = ref();
+    const note = ref();
     const userList = ref();
-    const numberPlate = /^(0[1-9]|[1-7][0-9]|8[01])((\s?[a-zA-Z]\s?)(\d{4,5})|(\s?[a-zA-Z]{2}\s?)(\d{3,4})|(\s?[a-zA-Z]{3}\s?)(\d{2,3}))$/
     const submitButton = ref<HTMLButtonElement | null>(null);
     const elTransfervalue = ref([]);
-    let vehicleId = -1;
+    const router = useRouter();
     let elTransferData = ref<any>();
 
     const vehicleShema = Yup.object().shape({
       brand: Yup.string().required().label("Marka"),
       model: Yup.string().required().label("Model"),
-      numberPlate: Yup.string().matches(numberPlate, 'Lütfen geçerli plaka giriniz').label("Plaka Numarası"),
+      numberPlate: Yup.string().required().label("Plaka"),
     });
 
     onMounted(async () => {
@@ -160,49 +167,44 @@ export default defineComponent({
         userId: userId.value,
       }
 
-      const Callback = await ApiService.Post("vehicle/create", vehicleData, JwtService.getToken());
-
-      console.log(Callback)
-
-      if (submitButton.value) {
-        submitButton.value!.disabled = true;
-        submitButton.value.setAttribute("data-kt-indicator", "on");
+      if (Object.values(elTransfervalue.value).length === 0) {
+        Swal.fire({
+          text: "Lütfen operasyon seçimi yapınız.",
+          icon: "warning",
+          confirmButtonText: "Tamam",
+        })
+        return;
       }
 
+      const Callback = await ApiService.Post("vehicle/create", vehicleData, JwtService.getToken());
+      
       if (Callback && Callback.success) {
+        await operationCreate(Callback.body[0].id);
+
+        if (note.value !== "") {
+          await noteCreate(Callback.body[0].id);
+        }
+
         Swal.fire({
           text: "Araç başarıyla kaydedildi.",
           icon: "success",
-          buttonsStyling: false,
-          confirmButtonText: "Tamam",
-          heightAuto: false,
-          customClass: {
-            confirmButton: "btn fw-semobold btn-light-primary",
-          },
         })
       } else {
         Swal.fire({
           text: Callback.message as string,
           icon: "error",
-          buttonsStyling: false,
-          confirmButtonText: "Tamam",
-          heightAuto: false,
-          customClass: {
-            confirmButton: "btn fw-semobold btn-light-danger",
-          },
         })
       }
 
-      submitButton.value?.removeAttribute("data-kt-indicator");
-      submitButton.value!.disabled = false;
+      router.push({ name: "vehicles" });
     }
 
     const operationProcess = async() => {
       const result = await ApiService.Post("operation/get", { id: -1 }, JwtService.getToken());
       const operationData = result.body;
 
-      const tmpData = operationData.map((operation, index) => ({
-        value: index,
+      const tmpData = operationData.map((operation) => ({
+        value: operation.id,
         name: operation.name,
         disabled: false,
       }));
@@ -214,8 +216,17 @@ export default defineComponent({
       return item.name.toLowerCase().includes(query.toLowerCase())
     }
 
+    const operationCreate = async (vehicleId) => {
+      await ApiService.Post("vehicle/operationCreate", { vehicleId: vehicleId, operationList: Object.values(elTransfervalue.value) }, JwtService.getToken());
+    }
+
+    const noteCreate = async (vehicleId) => {
+      await ApiService.Post("vehicle/noteCreate", { vehicleId: vehicleId, userId: userId.value, type: 1, note: note.value }, JwtService.getToken());
+    }
+ 
     return{
       userId,
+      note,
       userList,
       onSubmit,
       vehicleShema,
