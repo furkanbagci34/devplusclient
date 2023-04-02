@@ -76,11 +76,9 @@
           <div class="col-md-12 col-sm-12">
             <label class="form-label fs-6 fw-bold text-dark">Not</label>
             <textarea
-            tabindex="1"
             v-model="note"
             type="text"
             class="form-control form-control"
-            autocomplete="off"
           ></textarea>
           </div>
         </div>
@@ -168,11 +166,10 @@ export default defineComponent({
       }
 
       if (Object.values(elTransfervalue.value).length === 0) {
-        Swal.fire({
-          text: "Lütfen operasyon seçimi yapınız.",
-          icon: "warning",
-          confirmButtonText: "Tamam",
-        })
+        Swal.fire({ text: "Lütfen operasyon seçimi yapınız.", icon: "warning" });
+        return;
+      } else if(typeof userId.value == "undefined") {
+        Swal.fire({ text: "Lütfen kullanıcı seçimi yapınız.",icon: "warning" });
         return;
       }
 
@@ -185,18 +182,12 @@ export default defineComponent({
           await noteCreate(Callback.body[0].id);
         }
 
-        Swal.fire({
-          text: "Araç başarıyla kaydedildi.",
-          icon: "success",
-        })
-      } else {
-        Swal.fire({
-          text: Callback.message as string,
-          icon: "error",
-        })
-      }
+        Swal.fire({ text: "Araç başarıyla kaydedildi.", icon: "success" });
 
-      router.push({ name: "vehicles" });
+        router.push({ name: "vehicles" });
+      } else {
+        Swal.fire({ text: Callback.message as string, icon: "error" });
+      }
     }
 
     const operationProcess = async() => {
