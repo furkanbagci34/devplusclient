@@ -183,7 +183,6 @@ export default defineComponent({
         }
 
         Swal.fire({ text: "Araç başarıyla kaydedildi.", icon: "success" });
-
         router.push({ name: "vehicles" });
       } else {
         Swal.fire({ text: Callback.message as string, icon: "error" });
