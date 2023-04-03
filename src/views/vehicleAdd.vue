@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 mb-2">
             <el-transfer
               class="btn btn-white col-12"
               v-model="elTransfervalue"

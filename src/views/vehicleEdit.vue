@@ -7,118 +7,135 @@
   </div>
 
   <div class="row">
-    <div class="d-flex flex-stack flex-grow-1 w-lg-500px p-5 col-2">
-      <VForm
-      class="form w-100"
-      ref="signin"
-      @submit="onSubmit"
-      >
-      <div class="row mb-6">
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label fs-6 fw-bold text-dark">Marka</label>
-          <Field
-              tabindex="1"
-              class="form-control form-control-lg"
-              type="text"
-              name="brand"
-              autocomplete="off"
-              v-model.trim="formData.brand"
-          />
-        </div>
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label fs-6 fw-bold text-dark">Model</label>
-          <Field
-              tabindex="1"
-              class="form-control form-control-lg"
-              type="text"
-              name="model"
-              autocomplete="off"
-              v-model.trim="formData.model"
-          />
-        </div>
-        </div>
+    <VForm
+    class="form w-100"
+    ref="signin"
+    @submit="onSubmit"
+    >
+    <div class="row mb-6">
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label fs-6 fw-bold text-dark">Marka</label>
+        <Field
+            tabindex="1"
+            class="form-control "
+            type="text"
+            name="brand"
+            autocomplete="off"
+            v-model.trim="formData.brand"
+        />
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label fs-6 fw-bold text-dark">Model</label>
+        <Field
+            tabindex="1"
+            class="form-control "
+            type="text"
+            name="model"
+            autocomplete="off"
+            v-model.trim="formData.model"
+        />
+      </div>
+      </div>
 
-        <div class="row mb-10">
-          <div class="col-md-6 col-sm-4">
-            <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
-            <Field
-              tabindex="1"
-              class="form-control form-control-lg"
-              type="text"
-              name="numberPlate"
-              autocomplete="off"
-              v-model.trim="formData.numberPlate"
-            /> 
-            <div class="fv-plugins-message-container">
-              <div class="fv-help-block">
-                <ErrorMessage name="numberPlate" />
-              </div>
+      <div class="row mb-5">
+        <div class="col-md-6 col-sm-4">
+          <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
+          <Field
+            tabindex="1"
+            class="form-control "
+            type="text"
+            name="numberPlate"
+            autocomplete="off"
+            v-model.trim="formData.numberPlate"
+          /> 
+          <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+              <ErrorMessage name="numberPlate" />
             </div>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
-            <el-select v-model="formData.userId" filterable placeholder="Seçim yapınız" disabled>
-              <el-option
-              v-for="item in userList"
-              :key="item.id"
-              :label="`${item.name} ${item.surname}`"
-              :value="item.id"
-              />
-            </el-select>
-          </div>
         </div>
-
-        <div class="row mb-10">
-          <div class="col-md-12 col-sm-12">
-            <label class="form-label fs-6 fw-bold text-dark">Not</label>
-            <Field
-              tabindex="1"
-              class="form-control form-control-lg"
-              type="text"
-              name="note"
-              autocomplete="off"
-              v-model.trim="formData.note"
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
+          <el-select v-model="formData.userId" filterable placeholder="Seçim yapınız" disabled>
+            <el-option
+            v-for="item in userList"
+            :key="item.id"
+            :label="`${item.name} ${item.surname}`"
+            :value="item.id"
             />
-          </div>
-        </div>
-
-      <div class="row">
-        <div class="col-6">
-          <button
-            tabindex="3"
-            type="button"
-            ref="button"
-            class="btn btn-lg btn-danger w-100 mb-5"
-            @click="deleteVehicle()"
-            >
-            <span class="indicator-label"> Sil </span>
-            <span class="indicator-progress">
-              Lütfen Bekleyin...
-              <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
-              ></span>
-            </span>
-          </button>
-        </div>
-        <div class="col-6">
-          <button
-            tabindex="3"
-            type="submit"
-            ref="submitButton"
-            class="btn btn-lg btn-primary w-100 mb-5"
-            >
-            <span class="indicator-label"> Güncelle </span>
-            <span class="indicator-progress">
-                Lütfen Bekleyin...
-                <span
-                class="spinner-border spinner-border-sm align-middle ms-2"
-                ></span>
-            </span>
-          </button>
+          </el-select>
         </div>
       </div>
-      </VForm>
+
+      <div class="row mb-5">
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label fs-6 fw-bold text-dark">Yönetici Notları</label>
+          <Field
+            tabindex="1"
+            class="form-control "
+            type="text"
+            name="adminNote"
+            autocomplete="off"
+            v-model.trim="formData.adminNote"
+          />
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label fs-6 fw-bold text-dark">Müşteri Notları</label>
+          <Field
+            tabindex="1"
+            class="form-control "
+            type="text"
+            name="customerNote"
+            autocomplete="off"
+            v-model.trim="formData.customerNote"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mb-2">
+          <el-transfer
+            class="btn btn-white col-12 pt-0"
+            v-model="elTransfervalue"
+            filterable
+            :filter-method="filterMethod"
+            filter-placeholder="Arama"
+            :titles="['Kaynak', 'Hedef']"
+            :button-texts="['Çıkar', 'Ekle']"
+            :props="{
+              key: 'value',
+              label: 'name',
+            }"
+            :data="elTransferData"
+            :right-default-checked="elTransfervalue"
+          />
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="col-6">
+        <button
+          tabindex="3"
+          type="button"
+          ref="button"
+          class="btn btn-danger w-100 mb-5"
+          @click="deleteVehicle()"
+          >
+          Sil
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          tabindex="3"
+          type="submit"
+          ref="submitButton"
+          class="btn btn-primary w-100 mb-5"
+          >
+          Güncelle
+        </button>
+      </div>
     </div>
+    </VForm>
   </div>
 </template>
 
@@ -146,7 +163,9 @@ export default defineComponent({
     const userList = ref();
     const router = useRouter();
     const route = useRoute();
-    const formData = ref({ brand: '', model: '', numberPlate: '', userId: '', note: '', vehicleId: ''});
+    const formData = ref({ brand: '', model: '', numberPlate: '', userId: '', adminNote: '', customerNote: '', vehicleId: ''});
+    let elTransferData = ref<any>();
+    const elTransfervalue = ref<any>();
 
     onMounted(async () => {
       const userData = await ApiService.Post("user/get", { userId: -1 }, JwtService.getToken());
@@ -154,35 +173,33 @@ export default defineComponent({
 
       const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
       const data = await ApiService.Post("vehicle/get", { vehicleId: id }, JwtService.getToken());
+      const adminNote = await ApiService.Post("vehicle/noteGet", { vehicleId: id, type:1 }, JwtService.getToken());
+      const customerNote = await ApiService.Post("vehicle/noteGet", { vehicleId: id, type:2 }, JwtService.getToken());
 
       formData.value.brand = data.body[0].brand;
       formData.value.model = data.body[0].model;
       formData.value.numberPlate = data.body[0].numberPlate;
       formData.value.userId = data.body[0].userId;
-      formData.value.note = data.body[0].note;
-      formData.value.vehicleId = data.body[0].vehicleId
+      formData.value.adminNote = adminNote.body[0]?.note;
+      formData.value.customerNote = customerNote.body[0]?.note;
+      formData.value.vehicleId = data.body[0].vehicleId;
+
+      await operationProcess();
     });
 
     const onSubmit = async (values: any) => {
-    const data = { brand: values.brand, model: values.model, note: values.note, vehicleId: formData.value.vehicleId, numberPlate: values.numberPlate};
-    console.log(data)
+    const data = { brand: values.brand, model: values.model, adminNote: values.adminNote, vehicleId: formData.value.vehicleId, numberPlate: values.numberPlate};
     const callback = await ApiService.Post("vehicle/update", data, JwtService.getToken());
     
-    if (submitButton.value) {
-      submitButton.value!.disabled = true;
-      submitButton.value.setAttribute("data-kt-indicator", "on");
-    }
-
     await messageModal(callback);
-
-    submitButton.value?.removeAttribute("data-kt-indicator");
-    submitButton.value!.disabled = false;
 
     router.push({ name: "vehicles" });
     };
 
     const deleteVehicle = async () => {
       const callback = await ApiService.Post("vehicle/delete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+      await ApiService.Post("vehicle/operationDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+      await ApiService.Post("vehicle/noteDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
 
       await messageModal(callback);
 
@@ -191,30 +208,37 @@ export default defineComponent({
 
     const messageModal = async(callback) => {
       if (callback && callback.success) {
-        Swal.fire({
-        text: "İşleminiz başarıyla gerçekleştirildi.",
-        icon: "success",
-        buttonsStyling: false,
-        confirmButtonText: "Tamam",
-        heightAuto: false,
-        customClass: {
-          confirmButton: "btn fw-semobold btn-light-primary",
-        },
-      }).then(() => {
-
-      })
-    } else {
-      Swal.fire({
-        text: callback.message as string,
-        icon: "error",
-        buttonsStyling: false,
-        confirmButtonText: "Tamam",
-        heightAuto: false,
-        customClass: {
-          confirmButton: "btn fw-semobold btn-light-danger",
-        },
-      })
+        Swal.fire({ text: "İşleminiz başarıyla gerçekleştirildi.", icon: "warning" });
+      } else {
+        Swal.fire({ text: callback.message as string, icon: "warning" });
+      }
     }
+
+    const operationProcess = async() => {
+      const operationResult = await ApiService.Post("operation/get", { id: -1 }, JwtService.getToken());
+      const vehicleOperationResult = await ApiService.Post("vehicle/operationGet", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+      const operationData = operationResult.body;
+      const vehicleOperationData = vehicleOperationResult.body;
+
+      const data = operationData.map((operation) => ({
+        value: operation.id,
+        name: operation.name,
+        disabled: false,
+      }));
+
+      elTransferData.value = data;
+
+      const selectedIdList: any = [];
+
+      vehicleOperationData.forEach((operation) => {
+        selectedIdList.push(operation.operationId);
+      });
+
+      elTransfervalue.value = selectedIdList;
+    }
+
+    const filterMethod = (query, item) => {
+      return item.name.toLowerCase().includes(query.toLowerCase())
     }
 
     return {  
@@ -223,6 +247,9 @@ export default defineComponent({
       deleteVehicle,
       formData,
       userList,
+      elTransferData,
+      elTransfervalue,
+      filterMethod
     };
   }
 })
