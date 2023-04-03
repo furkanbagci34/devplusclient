@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 mb-2">
             <el-transfer
               class="btn btn-white col-12"
               v-model="elTransfervalue"
@@ -183,7 +183,6 @@ export default defineComponent({
         }
 
         Swal.fire({ text: "Araç başarıyla kaydedildi.", icon: "success" });
-
         router.push({ name: "vehicles" });
       } else {
         Swal.fire({ text: Callback.message as string, icon: "error" });
