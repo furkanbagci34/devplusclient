@@ -17,12 +17,20 @@
       <DxColumn data-field="model" caption="Model" />
       <DxColumn data-field="numberPlate" caption="Plaka Numarası" />
       <DxColumn data-field="userName" caption="Müşteri Adı"/>
-      <DxColumn type="buttons" caption="İşlemler">
+      <DxColumn type="buttons" caption="Düzenle" name="edit">
         <DxButton 
           text="Düzenle"
           icon="/media/icons/duotune/general/gen055.svg"
           hint="Düzenle"
           @click="onEditClick"
+        />
+      </DxColumn>
+      <DxColumn type="buttons" caption="İşlemler" name="transaction">
+        <DxButton 
+          text="İşlemler"
+          icon="/media/icons/duotune/files/fil025.svg"
+          hint="İşlemler"
+          @click="onOperationClick"
         />
       </DxColumn>
   
@@ -60,6 +68,9 @@
     methods: {
       onEditClick(e) {
         this.router.push({ name: 'vehicleEdit', params: { id: e.row.data.vehicleId }});
+      },
+      onOperationClick(e) {
+        this.router.push({ name: 'operation', params: { id: e.row.data.vehicleId }});
       },
     },
     setup () {

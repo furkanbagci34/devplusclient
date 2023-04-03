@@ -107,6 +107,19 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/operation/:id",
+        name: "operation",
+        component: () => import("@/views/operation.vue"),
+        meta: {
+          pageTitle: "Operasyon",
+          breadcrumbs: ["Operasyon"],
+          requiresAuth: true,
+          roles: {
+            admin: true, 
+          }
+        },
+      },
+      {
         path: "/myVehicle",
         name: "myVehicle",
         component: () => import("@/views/myVehicle.vue"),
@@ -120,12 +133,12 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/operation",
-        name: "operation",
-        component: () => import("@/views/operation.vue"),
+        path: "/transaction",
+        name: "transaction",
+        component: () => import("@/views/transaction.vue"),
         meta: {
-          pageTitle: "Operasyon Listesi",
-          breadcrumbs: ["Operasyon"],
+          pageTitle: "İşlem Listesi",
+          breadcrumbs: ["İşlemler"],
           requiresAuth: true,
           roles: {
             admin: true, 
@@ -133,12 +146,12 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/operationAdd",
-        name: "operationAdd",
-        component: () => import("@/views/operationAdd.vue"),
+        path: "/transactionAdd",
+        name: "transactionAdd",
+        component: () => import("@/views/transactionAdd.vue"),
         meta: {
-          pageTitle: "Operasyon Ekle",
-          breadcrumbs: ["operationAdd"],
+          pageTitle: "İşlem Ekle",
+          breadcrumbs: ["İşlem Ekle"],
           requiresAuth: true,
           roles: {
             admin: true, 
@@ -146,12 +159,12 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "/operationEdit/:id",
-        name: "operationEdit",
-        component: () => import("@/views/operationEdit.vue"),
+        path: "/transactionEdit/:id",
+        name: "transactionEdit",
+        component: () => import("@/views/transactionEdit.vue"),
         meta: {
-          pageTitle: "Operasyon Güncelle",
-          breadcrumbs: ["operationEdit"],
+          pageTitle: "İşlem Güncelle",
+          breadcrumbs: ["transactionEdit"],
           requiresAuth: true,
           roles: {
             admin: true, 

@@ -166,7 +166,7 @@ export default defineComponent({
       }
 
       if (Object.values(elTransfervalue.value).length === 0) {
-        Swal.fire({ text: "Lütfen operasyon seçimi yapınız.", icon: "warning" });
+        Swal.fire({ text: "Lütfen işlem seçimi yapınız.", icon: "warning" });
         return;
       } else if(typeof userId.value == "undefined") {
         Swal.fire({ text: "Lütfen kullanıcı seçimi yapınız.",icon: "warning" });
