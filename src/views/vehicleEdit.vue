@@ -12,7 +12,7 @@
     ref="signin"
     @submit="onSubmit"
     >
-    <div class="row mb-6">
+    <div class="row mb-5">
       <div class="col-md-6 col-sm-12">
         <label class="form-label fs-6 fw-bold text-dark">Marka</label>
         <Field
@@ -35,82 +35,82 @@
             v-model.trim="formData.model"
         />
       </div>
-      </div>
+    </div>
 
-      <div class="row mb-5">
-        <div class="col-md-6 col-sm-4">
-          <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
-          <Field
-            tabindex="1"
-            class="form-control "
-            type="text"
-            name="numberPlate"
-            autocomplete="off"
-            v-model.trim="formData.numberPlate"
-          /> 
-          <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
-              <ErrorMessage name="numberPlate" />
-            </div>
+    <div class="row mb-5">
+      <div class="col-md-6 col-sm-4">
+        <label class="form-label fs-6 fw-bold text-dark">Plaka Numarası</label>
+        <Field
+          tabindex="1"
+          class="form-control "
+          type="text"
+          name="numberPlate"
+          autocomplete="off"
+          v-model.trim="formData.numberPlate"
+        /> 
+        <div class="fv-plugins-message-container">
+          <div class="fv-help-block">
+            <ErrorMessage name="numberPlate" />
           </div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
-          <el-select v-model="formData.userId" filterable placeholder="Seçim yapınız" disabled>
-            <el-option
-            v-for="item in userList"
-            :key="item.id"
-            :label="`${item.name} ${item.surname}`"
-            :value="item.id"
-            />
-          </el-select>
-        </div>
       </div>
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label fs-6 fw-bold text-dark">Kullanıcı Seçimi</label><br>
+        <el-select v-model="formData.userId" filterable placeholder="Seçim yapınız" disabled>
+          <el-option
+          v-for="item in userList"
+          :key="item.id"
+          :label="`${item.name} ${item.surname}`"
+          :value="item.id"
+          />
+        </el-select>
+      </div>
+    </div>
 
-      <div class="row mb-5">
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label fs-6 fw-bold text-dark">Yönetici Notları</label>
-          <Field
-            tabindex="1"
-            class="form-control "
-            type="text"
-            name="adminNote"
-            autocomplete="off"
-            v-model.trim="formData.adminNote"
-          />
-        </div>
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label fs-6 fw-bold text-dark">Müşteri Notları</label>
-          <Field
-            tabindex="1"
-            class="form-control "
-            type="text"
-            name="customerNote"
-            autocomplete="off"
-            v-model.trim="formData.customerNote"
-          />
-        </div>
+    <div class="row mb-5">
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label fs-6 fw-bold text-dark">Yönetici Notları</label>
+        <Field
+          tabindex="1"
+          class="form-control "
+          type="text"
+          name="adminNote"
+          autocomplete="off"
+          v-model.trim="formData.adminNote"
+        />
       </div>
+      <div class="col-md-6 col-sm-12">
+        <label class="form-label fs-6 fw-bold text-dark">Müşteri Notları</label>
+        <Field
+          tabindex="1"
+          class="form-control "
+          type="text"
+          name="customerNote"
+          autocomplete="off"
+          v-model.trim="formData.customerNote"
+          disabled
+        />
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="col-12 mb-2">
-          <el-transfer
-            class="btn btn-white col-12 pt-0"
-            v-model="elTransfervalue"
-            filterable
-            :filter-method="filterMethod"
-            filter-placeholder="Arama"
-            :titles="['Kaynak', 'Hedef']"
-            :button-texts="['Çıkar', 'Ekle']"
-            :props="{
-              key: 'value',
-              label: 'name',
-            }"
-            :data="elTransferData"
-            :right-default-checked="elTransfervalue"
-          />
-        </div>
+    <div class="row">
+      <div class="col-12 mb-2">
+        <el-transfer
+          class="btn btn-white col-12 pt-0"
+          v-model="elTransfervalue"
+          filterable
+          :filter-method="filterMethod"
+          filter-placeholder="Arama"
+          :titles="['Kaynak', 'Hedef']"
+          :button-texts="['Çıkar', 'Ekle']"
+          :props="{
+            key: 'value',
+            label: 'name',
+          }"
+          :data="elTransferData"
+        />
       </div>
+    </div>
 
     <div class="row">
       <div class="col-6">
@@ -127,9 +127,10 @@
       <div class="col-6">
         <button
           tabindex="3"
-          type="submit"
+          type="button"
           ref="submitButton"
           class="btn btn-primary w-100 mb-5"
+          @click="updateVehicle()"
           >
           Güncelle
         </button>
@@ -157,14 +158,14 @@ export default defineComponent({
     ErrorMessage,
   },
   setup() {
-    Yup.setLocale(tr)
+    Yup.setLocale(tr);
     const ApiService = new DevPlusApiService();
     const submitButton = ref<HTMLButtonElement | null>(null);
     const userList = ref();
     const router = useRouter();
     const route = useRoute();
-    const formData = ref({ brand: '', model: '', numberPlate: '', userId: '', adminNote: '', customerNote: '', vehicleId: ''});
-    let elTransferData = ref<any>();
+    const formData = ref({ brand: '', model: '', numberPlate: '', userId: '', adminNote: '', customerNote: '', vehicleId: '', adminNoteId: -1});
+    const elTransferData = ref<any>();
     const elTransfervalue = ref<any>();
 
     onMounted(async () => {
@@ -181,6 +182,7 @@ export default defineComponent({
       formData.value.numberPlate = data.body[0].numberPlate;
       formData.value.userId = data.body[0].userId;
       formData.value.adminNote = adminNote.body[0]?.note;
+      formData.value.adminNoteId = adminNote.body[0]?.id;
       formData.value.customerNote = customerNote.body[0]?.note;
       formData.value.vehicleId = data.body[0].vehicleId;
 
@@ -188,23 +190,53 @@ export default defineComponent({
     });
 
     const onSubmit = async (values: any) => {
-    const data = { brand: values.brand, model: values.model, adminNote: values.adminNote, vehicleId: formData.value.vehicleId, numberPlate: values.numberPlate};
-    const callback = await ApiService.Post("vehicle/update", data, JwtService.getToken());
-    
-    await messageModal(callback);
-
-    router.push({ name: "vehicles" });
-    };
-
-    const deleteVehicle = async () => {
-      const callback = await ApiService.Post("vehicle/delete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
-      await ApiService.Post("vehicle/operationDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
-      await ApiService.Post("vehicle/noteDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
-
+      const data = { brand: values.brand, model: values.model, adminNote: values.adminNote, vehicleId: formData.value.vehicleId, numberPlate: values.numberPlate};
+      const callback = await ApiService.Post("vehicle/update", data, JwtService.getToken());
+      
       await messageModal(callback);
 
       router.push({ name: "vehicles" });
     };
+
+    const deleteVehicle = async () => {
+      Swal.fire({
+        text: "Aracı silmek istediğinize emin misiniz ?",
+        icon: "warning",
+        confirmButtonText: "Tamam",
+        cancelButtonText: "İptal",
+        showCancelButton: true,
+      }).then(async (result) => {
+        if (result.value) {
+          await ApiService.Post("vehicle/operationDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+          await ApiService.Post("vehicle/noteDelete", { vehicleId: formData.value.vehicleId, id: formData.value.adminNoteId }, JwtService.getToken());
+          const callback = await ApiService.Post("vehicle/delete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+
+          await messageModal(callback);
+          router.push({ name: "vehicles" });
+        }
+      });
+    };
+
+    const updateVehicle = async() => {
+      Swal.fire({
+        text: "Aracı güncellemek istediğinize emin misiniz ?",
+        icon: "warning",
+        confirmButtonText: "Tamam",
+        cancelButtonText: "İptal",
+        showCancelButton: true,
+      }).then(async (result) => {
+        if (result.value) {
+          await ApiService.Post("vehicle/operationDelete", { vehicleId: formData.value.vehicleId }, JwtService.getToken());
+          await ApiService.Post("vehicle/noteDelete", { vehicleId: formData.value.vehicleId, id: formData.value.adminNoteId }, JwtService.getToken());
+
+          const callback = await ApiService.Post("vehicle/operationCreate", { vehicleId: formData.value.vehicleId, operationList: Object.values(elTransfervalue.value) }, JwtService.getToken());
+          await ApiService.Post("vehicle/noteCreate", { vehicleId: formData.value.vehicleId, userId: formData.value.userId, type: 1, note: formData.value.adminNote }, JwtService.getToken());
+        
+          await messageModal(callback);
+          router.push({ name: "vehicles" });
+        }
+      });
+    }
 
     const messageModal = async(callback) => {
       if (callback && callback.success) {
@@ -249,7 +281,8 @@ export default defineComponent({
       userList,
       elTransferData,
       elTransfervalue,
-      filterMethod
+      filterMethod,
+      updateVehicle
     };
   }
 })
