@@ -52,3 +52,9 @@ body {
     padding: 0.59rem 1.5rem !important;
     border-radius: 10px !important
 }
+.btn-xsm {
+    padding: calc(0.05rem + 1px) calc(0.25rem + 1px) !important
+}
+.el-radio{
+    margin-right: 10px !important;
+}

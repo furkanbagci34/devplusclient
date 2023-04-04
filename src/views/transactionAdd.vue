@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-end mb-4">
     <div class="col-md-3 col-sm-6 d-grid">
-      <button class="btn btn-success btn-sm" @click="$router.push('/operation')">
+      <button class="btn btn-success btn-sm" @click="$router.push('/transaction')">
         <span class="bi bi-arrow-return-left align-items-center fs-6"> Listeye Geri Dön</span></button>
     </div>
   </div>
@@ -15,7 +15,7 @@
       >
       <div class="row mb-6">
         <div class="col-12">
-          <label class="form-label fs-6 fw-bold text-dark">Operasyon Adı</label>
+          <label class="form-label fs-6 fw-bold text-dark">İşlem Adı</label>
           <Field
             tabindex="1"
             class="form-control form-control-lg"
@@ -63,7 +63,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
-  name: "operationAdd",
+  name: "transactionAdd",
   components: {
     Field,
     VForm,
@@ -86,7 +86,7 @@ export default defineComponent({
 
     if (Callback && Callback.success) {
       Swal.fire({
-      text: "Operasyon başarıyla kaydedildi.",
+      text: "İşlem başarıyla kaydedildi.",
       icon: "success",
       buttonsStyling: false,
       confirmButtonText: "Tamam",
@@ -113,7 +113,7 @@ export default defineComponent({
     submitButton.value?.removeAttribute("data-kt-indicator");
     submitButton.value!.disabled = false;
 
-    router.push({ name: "operation" });
+    router.push({ name: "transaction" });
   };
     return {
       onSubmit,

@@ -7,11 +7,12 @@
       :validation-schema="login"
       :initial-values="{ phone: '', password: '' }"
     >
-    <div class="text-center mb-10">
-      <h1 class="text-dark mb-3">Giriş Yap</h1>
-    </div>
     
-    <div class="fv-row row mb-10">
+      <div class="text-center mb-10">
+        <h1 class="text-dark mb-3">Giriş Yap</h1>
+      </div>
+    
+      <div class="fv-row row mb-10">
         <label class="form-label fs-6 fw-bold text-dark">Telefon Numarası</label>
         <Field
         tabindex="1"

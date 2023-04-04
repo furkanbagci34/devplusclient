@@ -37,8 +37,8 @@ const MainMenuConfig: Array<MenuItem> = [
         roles: ["admin","user"]
       },
       {
-        heading: "Operasyon",
-        route: "/operation",
+        heading: "İşlemler",
+        route: "/transaction",
         fontIcon: "bi-hypnotize",
         roles: ["admin"]
       },
