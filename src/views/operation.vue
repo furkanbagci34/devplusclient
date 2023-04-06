@@ -1,58 +1,56 @@
 <template>
   <el-card shadow="always">
-    <div class="demo-collapse">
-      <el-collapse accordion v-for="op in operationList" v-model="activeOperation" @change="operationChange(op.status,op.operationId)">
+    <el-collapse accordion v-for="op in operationList" v-model="activeOperation" @change="operationChange(op.status,op.operationId)">
+      
+      <el-collapse-item :name="op.operationId">
         
-        <el-collapse-item :name="op.operationId">
-          
-          <template #title>
-            <div v-if="op.status == 0">
-              <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
-              <i class="bi bi-hourglass-top" style="font-size: 1.75rem; color: red;"></i>
-            </div>
+        <template #title>
+          <div v-if="op.status == 0">
+            <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
+            <i class="bi bi-hourglass-top" style="font-size: 1.75rem; color: red;"></i>
+          </div>
 
-            <div v-if="op.status == 1">
-              <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
-              <i class="bi bi-wrench-adjustable-circle-fill" style="font-size: 1.75rem; color: orange;"></i>
-            </div>
+          <div v-if="op.status == 1">
+            <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
+            <i class="bi bi-wrench-adjustable-circle-fill" style="font-size: 1.75rem; color: orange;"></i>
+          </div>
 
-            <div v-if="op.status == 2">
-              <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
-              <i class="bi bi-check-circle-fill" style="font-size: 1.75rem; color: green;"></i>
-            </div>
-          </template>
+          <div v-if="op.status == 2">
+            <span class="fw-bolder fs-4">{{ op.operationName }}</span>&nbsp;&nbsp;
+            <i class="bi bi-check-circle-fill" style="font-size: 1.75rem; color: green;"></i>
+          </div>
+        </template>
 
-          <el-card shadow="always" style="background-color: azure;">
-            <el-radio-group class="mt-2" v-model="operationStatus">
-              <el-radio :label="0">Bekliyor</el-radio>
-              <el-radio :label="1">Yapılıyor</el-radio>
-              <el-radio :label="2">Tamamlandı</el-radio>
-            </el-radio-group>
-            <button class="btn btn-success btn-sm btn-xsm mb-3" @click="operationStatusSave">
-            <span class="bi bi-check-lg align-items-center fs-6"> Kaydet</span></button> 
-          </el-card>
-          <br>
+        <el-card shadow="always" style="background-color: azure;">
+          <el-radio-group class="mt-2" v-model="operationStatus">
+            <el-radio :label="0">Bekliyor</el-radio>
+            <el-radio :label="1">Yapılıyor</el-radio>
+            <el-radio :label="2">Tamamlandı</el-radio>
+          </el-radio-group>
+          <button class="btn btn-success btn-sm btn-xsm mb-3" @click="operationStatusSave">
+          <span class="bi bi-check-lg align-items-center fs-6"> Kaydet</span></button> 
+        </el-card>
+        <br>
 
-          <el-upload
-            v-model:file-list="fileList"
-            action="''"
-            :multiple="true"
-            list-type="picture-card"
-            :auto-upload="false"
-            :on-change="convertToBase64"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-          >
-            <el-icon><Plus /></el-icon>
-          </el-upload>
+        <el-upload
+          v-model:file-list="fileList"
+          action="''"
+          :multiple="true"
+          list-type="picture-card"
+          :auto-upload="false"
+          :on-change="convertToBase64"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+        >
+          <el-icon><Plus /></el-icon>
+        </el-upload>
 
-          <el-dialog v-model="dialogVisible" width="90%" class="text-center">
-            <img w-full :src="dialogImageUrl" alt="Preview Image" class="img-fluid"/>
-          </el-dialog>
+        <el-dialog v-model="dialogVisible" width="90%" class="text-center">
+          <img w-full :src="dialogImageUrl" alt="Preview Image" class="img-fluid"/>
+        </el-dialog>
 
-        </el-collapse-item>
-      </el-collapse>
-    </div>
+      </el-collapse-item>
+    </el-collapse>
   </el-card>
 </template>
 
@@ -60,7 +58,7 @@
 import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
 import JwtService from "@/core/services/JwtService";
 import { defineComponent, ref, onMounted } from "vue";
-import { useRouter, useRoute  } from "vue-router";
+import { useRoute  } from "vue-router";
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps, UploadUserFile } from 'element-plus'
 import Swal from "sweetalert2";
@@ -90,7 +88,6 @@ export default defineComponent({
 
     setup () {
       const ApiService = new DevPlusApiService();
-      const router = useRouter();
       const route = useRoute();
       const operationList = ref();
       const activeOperation = ref()

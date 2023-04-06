@@ -111,6 +111,7 @@ import { defineComponent, ref } from "vue";
 import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
 import JwtService from "@/core/services/JwtService";
 import { ErrorMessage, Field, Form as VForm } from "vee-validate";
+import { useRouter } from "vue-router";
 import * as Yup from "yup";
 import { tr } from 'yup-locales';
 import Swal from "sweetalert2";
@@ -125,6 +126,7 @@ export default defineComponent({
     setup() {
       Yup.setLocale(tr)
       const ApiService = new DevPlusApiService();
+      const router = useRouter();
 
       const submitButton = ref<HTMLButtonElement | null>(null);
       const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -164,7 +166,7 @@ export default defineComponent({
                     confirmButton: "btn fw-semobold btn-light-primary",
                 },
             }).then(() => {
-
+                router.push({ name: "users" });
             })
         } else {
             Swal.fire({
