@@ -103,13 +103,13 @@ export default defineComponent({
       const operationChange = async (opStatus: any, opId: any) => {
         
         fileList.value = []
+        photoList.value = []
         operationStatus.value = opStatus
 
         if(!activeOperation.value) return;
 
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationPhotoGet", { vehicleId: vehicleId, operationId: activeOperation.value,}, JwtService.getToken());
-        console.log(data)
 
         if(data.success && data.success == true){
 
@@ -118,7 +118,6 @@ export default defineComponent({
             photoList.value.push(i.photo)
           });
         }
-        console.log(photoList)
       }
 
       const operationStatusSave = async () => {
@@ -137,17 +136,26 @@ export default defineComponent({
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationPhotoCreate", { vehicleId: vehicleId, operationId: activeOperation.value, photoList: photoList }, JwtService.getToken());
 
-        console.log(data)
       }
 
-      const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
-        console.log(uploadFile.name)
-        
+      const handleRemove: UploadProps['onRemove'] = async (uploadFile) => {
+        const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
+        const callback = await ApiService.Post("vehicle/operationPhotoDelete", { vehicleId: vehicleId, id: uploadFile.name }, JwtService.getToken());
+
+        await messageModal(callback);
       }
 
       const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
         dialogImageUrl.value = uploadFile.url!
         dialogVisible.value = true
+      }
+
+      const messageModal = async(callback) => {
+        if (callback && callback.success) {
+          Swal.fire({ text: "İşleminiz başarıyla gerçekleştirildi.", icon: "success" });
+        } else {
+          Swal.fire({ text: callback.message as string, icon: "warning" });
+        }
       }
 
       onMounted(async () =>{
