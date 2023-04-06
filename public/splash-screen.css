@@ -58,3 +58,6 @@ body {
 .el-radio{
     margin-right: 10px !important;
 }
+.el-card__body{
+    padding: 5px !important;
+}
