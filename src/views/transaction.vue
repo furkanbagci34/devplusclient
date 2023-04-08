@@ -13,6 +13,7 @@
       :selection="{ mode: 'single' }"
       :show-borders="true"
       :hover-state-enabled="true"
+      :column-auto-width="true"
       >
 
       <DxColumn data-field="id" caption="Id" alignment="center" width="75" />

@@ -1,6 +1,6 @@
 <template>
   <el-card shadow="always">
-    <el-collapse accordion v-for="op in operationList" v-model="activeOperation" @change="operationChange(op.status,op.operationId)">
+    <el-collapse accordion v-for="op in operationList" v-model="activeOperation" @change="operationChange(op.status)">
       
       <el-collapse-item :name="op.operationId">
         
@@ -97,18 +97,22 @@ export default defineComponent({
       const fileList = ref<UploadUserFile[]>([])
       const photoList = ref<string[]>([])
 
-      const operationChange = async (opStatus: any, opId: any) => {
+      const operationChange = async (opStatus?: any) => {
         
         fileList.value = []
         photoList.value = []
-        operationStatus.value = opStatus
+
+        if(typeof opStatus != 'undefined') operationStatus.value = opStatus
 
         if(!activeOperation.value) return;
 
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationPhotoGet", { vehicleId: vehicleId, operationId: activeOperation.value,}, JwtService.getToken());
 
-        if(data.success && data.success == true){
+        if(data && data.success){
+
+          fileList.value = []
+          photoList.value = []
 
           data.body.forEach(i => {
             fileList.value.push({name: i.id, url: i.photo})
@@ -121,8 +125,8 @@ export default defineComponent({
 
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationUpdate", { vehicleId: vehicleId, operationId: activeOperation.value, status: operationStatus.value }, JwtService.getToken());
-        
-        if(data.success && data.success == true){
+
+        if(data && data.success){
           const data = await ApiService.Post("vehicle/operationGet", { vehicleId: vehicleId }, JwtService.getToken());
           operationList.value = data.body
         }
@@ -133,11 +137,15 @@ export default defineComponent({
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationPhotoCreate", { vehicleId: vehicleId, operationId: activeOperation.value, photoList: photoList }, JwtService.getToken());
 
+        if(data && data.success) operationChange()
+
       }
 
       const handleRemove: UploadProps['onRemove'] = async (uploadFile) => {
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const callback = await ApiService.Post("vehicle/operationPhotoDelete", { vehicleId: vehicleId, id: uploadFile.name }, JwtService.getToken());
+
+        if(callback && callback.success) operationChange()
 
         await messageModal(callback);
       }

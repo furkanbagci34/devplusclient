@@ -11,12 +11,13 @@
     <DxDataGrid
     :data-source="userList"
     :show-borders="true"
-  >
+    :column-auto-width="true"
+    >
 
     <DxColumn data-field="name" caption="Ad" />
     <DxColumn data-field="surname" caption="Soyad" />
-    <DxColumn data-field="mobilePhone" caption="Telefon" />
-    <DxColumn data-field="email" caption="E-Mail" :width="220"/>
+    <DxColumn data-field="mobilePhone" caption="Telefon"/>
+    <DxColumn data-field="email" caption="E-Mail"  width="240"/>
 
     <DxPaging :page-size="10"/>
     <DxColumn type="buttons" caption="İşlemler">

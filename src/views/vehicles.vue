@@ -11,12 +11,13 @@
       <DxDataGrid
       :data-source="vehicleList"
       :show-borders="true"
+      :column-auto-width="true"
     >
   
       <DxColumn data-field="brand" caption="Marka" />
       <DxColumn data-field="model" caption="Model" />
       <DxColumn data-field="numberPlate" caption="Plaka Numarası" />
-      <DxColumn data-field="userName" caption="Müşteri Adı"/>
+      <DxColumn data-field="userName" caption="Müşteri Adı" width="150"/>
       <DxColumn type="buttons" caption="Düzenle" name="edit">
         <DxButton 
           text="Düzenle"
@@ -50,7 +51,7 @@
   import { defineComponent, onMounted, ref } from "vue";
   import DevPlusApiService from "@/core/services/ApiServiceDevPlus";
   import JwtService from "@/core/services/JwtService";
-  import { DxDataGrid, DxColumn, DxPaging, DxSelection, DxFilterRow, DxScrolling, DxButton} from 'devextreme-vue/data-grid';
+  import { DxDataGrid, DxColumn, DxPaging, DxSelection, DxFilterRow, DxButton} from 'devextreme-vue/data-grid';
   import themes from 'devextreme/ui/themes';
   import { useRouter } from "vue-router";
   
@@ -62,7 +63,6 @@
       DxPaging,
       DxSelection,
       DxFilterRow,
-      DxScrolling,
       DxButton
     },
     methods: {
