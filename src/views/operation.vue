@@ -98,7 +98,6 @@ export default defineComponent({
       const photoList = ref<string[]>([])
 
       const operationChange = async (opStatus?: any) => {
-        
         fileList.value = []
         photoList.value = []
 
@@ -122,7 +121,6 @@ export default defineComponent({
       }
 
       const operationStatusSave = async () => {
-
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationUpdate", { vehicleId: vehicleId, operationId: activeOperation.value, status: operationStatus.value }, JwtService.getToken());
 
@@ -133,12 +131,10 @@ export default defineComponent({
       }
 
       const operationPhotoCreate = async (photoList: any) => {
-
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationPhotoCreate", { vehicleId: vehicleId, operationId: activeOperation.value, photoList: photoList }, JwtService.getToken());
 
         if(data && data.success) operationChange()
-
       }
 
       const handleRemove: UploadProps['onRemove'] = async (uploadFile) => {
@@ -167,7 +163,7 @@ export default defineComponent({
         const vehicleId = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
         const data = await ApiService.Post("vehicle/operationGet", { vehicleId: vehicleId }, JwtService.getToken());
         operationList.value = data.body
-      })
+      });
 
       return{
         operationList,
@@ -181,7 +177,7 @@ export default defineComponent({
         operationStatusSave,
         handleRemove,
         handlePictureCardPreview,
-        operationPhotoCreate
+        operationPhotoCreate,
       }
     }
 })
