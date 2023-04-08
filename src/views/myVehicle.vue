@@ -85,18 +85,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style scoped>
-    .demo-image__lazy {
-    height: 400px;
-    overflow-y: auto;
-    }
-    .demo-image__lazy .el-image {
-    display: block;
-    min-height: 200px;
-    margin-bottom: 10px;
-    }
-    .demo-image__lazy .el-image:last-child {
-    margin-bottom: 0;
-    }
-</style>
