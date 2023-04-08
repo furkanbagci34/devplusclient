@@ -253,6 +253,7 @@ router.beforeEach(async (to, from, next) => {
           next({ name: 'sign-in' })
         }
         authStore.setUser({
+          id: userInfo.body.userInfo.id,
           name: userInfo.body.userInfo.name,
           surname: userInfo.body.userInfo.surname,
           email: userInfo.body.userInfo.email,
