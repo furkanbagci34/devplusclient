@@ -12,6 +12,7 @@
     :data-source="userList"
     :show-borders="true"
     :column-auto-width="true"
+    @row-prepared="onRowPrepared"
     >
 
     <DxColumn data-field="name" caption="Ad" />
@@ -56,6 +57,14 @@ export default defineComponent({
     onEditClick(e) {
       this.router.push({ name: 'userEdit', params: { id: e.row.data.id }});
     },
+    onRowPrepared(e) {
+      if(e.rowType === 'header') {
+        e.rowElement.classList.add('grid-header');
+      }
+      if(e.rowType === 'data') {
+        e.rowElement.classList.add('grid-datastyle');
+      }
+    }
   },
   setup () {
     const ApiService = new DevPlusApiService();

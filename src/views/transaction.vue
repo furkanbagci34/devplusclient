@@ -14,6 +14,7 @@
       :show-borders="true"
       :hover-state-enabled="true"
       :column-auto-width="true"
+      @row-prepared="onRowPrepared"
       >
 
       <DxColumn data-field="id" caption="Id" alignment="center" width="75" />
@@ -61,6 +62,14 @@ export default defineComponent({
     onEditClick(e) {
       this.router.push({ name: 'transactionEdit', params: { id: e.row.data.id }});
     },
+    onRowPrepared(e) {
+      if(e.rowType === 'header') {
+        e.rowElement.classList.add('grid-header');
+      }
+      if(e.rowType === 'data') {
+        e.rowElement.classList.add('grid-datastyle');
+      }
+    }
   },
   
   setup () {
