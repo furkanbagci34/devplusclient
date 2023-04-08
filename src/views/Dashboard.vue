@@ -51,8 +51,8 @@ export default defineComponent({
   setup() {
 
     const ApiService = new DevPlusApiService();
-    const userCount = ref();
-    const vehicleCount = ref();
+    const userCount = ref('0');
+    const vehicleCount = ref('0');
 
     onMounted(async () => {
       const user = await ApiService.Post("user/get", { userId: -1 }, JwtService.getToken());
