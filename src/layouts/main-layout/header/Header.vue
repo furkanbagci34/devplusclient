@@ -1,7 +1,7 @@
 <template>
   <div id="kt_header" class="header align-items-stretch">
     <div class="header-brand">
-      <router-link to="/dashboard">
+      <router-link to="/home">
         <img
           alt="Logo"
           :src="getAssetPath('media/logos/default-dark.svg')"

@@ -61,3 +61,16 @@ body {
 .el-card__body{
     padding: 5px !important;
 }
+.grid-header{
+    color: #4794ff !important;
+    background-color: #edf2f9 !important;
+}
+.grid-bg-success{
+    background-color: #b3e19d;
+}
+.grid-bg-process{
+    background-color: #eebe77;
+}
+.grid-datastyle{
+    font-weight: 500;
+}

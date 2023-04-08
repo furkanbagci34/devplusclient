@@ -1,7 +1,5 @@
 <template>
-  <!--begin: Statistics Widget 6-->
   <div :class="[widgetClasses, `bg-light-${color}`]" class="card">
-    <!--begin::Body-->
     <div class="card-body my-3">
       <a
         href="#"
@@ -29,9 +27,7 @@
         ></div>
       </div>
     </div>
-    <!--end:: Body-->
   </div>
-  <!--end: Statistics Widget 6-->
 </template>
 
 <script lang="ts">

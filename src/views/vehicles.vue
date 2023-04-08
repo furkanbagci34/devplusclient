@@ -12,6 +12,7 @@
       :data-source="vehicleList"
       :show-borders="true"
       :column-auto-width="true"
+      @row-prepared="onRowPrepared"
     >
   
       <DxColumn data-field="brand" caption="Marka" />
@@ -72,6 +73,20 @@
       onOperationClick(e) {
         this.router.push({ name: 'operation', params: { id: e.row.data.vehicleId }});
       },
+      onRowPrepared(e) {
+        if(e.rowType === 'header') {
+          e.rowElement.classList.add('grid-header');
+        }
+        if(e.rowType === 'data') {
+
+          e.rowElement.classList.add('grid-datastyle');
+
+          if (e.data.complateStatus == true)
+            e.rowElement.classList.add('grid-bg-success');
+          else 
+            e.rowElement.classList.add('grid-bg-process');
+        }
+      }
     },
     setup () {
       const ApiService = new DevPlusApiService();

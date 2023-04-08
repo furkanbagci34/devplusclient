@@ -1,7 +1,5 @@
 <template>
-  <!--begin::Statistics Widget 5-->
   <a href="#" :class="[widgetClasses, `bg-${color}`]" class="card hoverable">
-    <!--begin::Body-->
     <div class="card-body">
       <span :class="`svg-icon-${iconColor}`" class="svg-icon svg-icon-3x mx-n1">
         <inline-svg :src="svgIcon" />
@@ -15,13 +13,11 @@
         {{ description }}
       </div>
     </div>
-    <!--end::Body-->
   </a>
-  <!--end::Statistics Widget 5-->
 </template>
 
 <script lang="ts">
-import { getAssetPath } from "@/core/helpers/assets";
+
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -37,7 +33,7 @@ export default defineComponent({
   components: {},
   setup() {
     return {
-      getAssetPath,
+
     };
   },
 });
