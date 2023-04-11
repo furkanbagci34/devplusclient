@@ -111,8 +111,8 @@ export default defineComponent({
         submitButton.value!.disabled = true;
         submitButton.value.setAttribute("data-kt-indicator", "on");
       }
-
-      if (Callback.statusCode === 200) {
+      console.log(Callback)
+      if (Callback && Callback.success) {
         Swal.fire({
           text: "Başarıyla giriş yaptınız. Yönlendiriliyorsunuz.",
           icon: "success",

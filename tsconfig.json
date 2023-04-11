@@ -4,7 +4,6 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "noEmit": true,
-    "suppressImplicitAnyIndexErrors": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
