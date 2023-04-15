@@ -90,12 +90,12 @@ export default defineComponent({
       const ApiService = new DevPlusApiService();
       const route = useRoute();
       const operationList = ref();
-      const activeOperation = ref()
-      const operationStatus = ref()
-      const dialogImageUrl = ref('')
-      const dialogVisible = ref(false)
-      const fileList = ref<UploadUserFile[]>([])
-      const photoList = ref<string[]>([])
+      const activeOperation = ref();
+      const operationStatus = ref();
+      const dialogImageUrl = ref('');
+      const dialogVisible = ref(false);
+      const fileList = ref<UploadUserFile[]>([]);
+      const photoList = ref<string[]>([]);
 
       const operationChange = async (opStatus?: any) => {
         fileList.value = []

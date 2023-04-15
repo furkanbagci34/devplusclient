@@ -14,7 +14,7 @@
       @submit="onSubmit"
       >
       <div class="row mb-6">
-        <div class="col-12">
+        <div class="col-8">
           <label class="form-label fs-6 fw-bold text-dark">İşlem Adı</label>
           <Field
             tabindex="1"
@@ -30,8 +30,23 @@
             </div>
           </div>
         </div>
+        <div class="col-4">
+          <label class="form-label fs-6 fw-bold text-dark">Fiyat</label>
+          <Field
+            tabindex="2"
+            class="form-control form-control-lg"
+            type="number"
+            name="price"
+            autocomplete="off"
+            v-model.trim="formData.price"
+          />
+          <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+              <ErrorMessage name="name2" />
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="row">
         <div class="col-6">
           <button
@@ -95,17 +110,18 @@ export default defineComponent({
     const submitButton = ref<HTMLButtonElement | null>(null);
     const router = useRouter();
     const route = useRoute();
-    const formData = ref({ name: '', id: 0 });
+    const formData = ref({ name: '', id: 0, price:0 });
 
     onMounted(async () => {
       const id = typeof route.params.id === 'string' ? parseInt(route.params.id) : route.params.id[0];
       const data = await ApiService.Post("operation/get", { id: id }, JwtService.getToken());
       formData.value.name = data.body[0].name;
       formData.value.id = data.body[0].id;
+      formData.value.price = data.body[0].price;
     });
 
     const onSubmit = async (values: any) => {
-    const data = { name: values.name, id: formData.value.id };
+    const data = { name: values.name, id: formData.value.id, price: parseFloat(formData.value.price) };
     const callback = await ApiService.Post("operation/update", data, JwtService.getToken());
     
     if (submitButton.value) {

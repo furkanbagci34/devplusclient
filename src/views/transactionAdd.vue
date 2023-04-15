@@ -11,10 +11,10 @@
       <VForm
       class="form w-100"
       @submit="onSubmit"
-      :initial-values="{ name: ''}"
+      :initial-values="{ name: '', price: 0}"
       >
       <div class="row mb-6">
-        <div class="col-12">
+        <div class="col-8">
           <label class="form-label fs-6 fw-bold text-dark">İşlem Adı</label>
           <Field
             tabindex="1"
@@ -29,8 +29,22 @@
             </div>
           </div>
         </div>
+        <div class="col-4">
+          <label class="form-label fs-6 fw-bold text-dark">Fiyat</label>
+          <Field
+            tabindex="2"
+            class="form-control form-control-lg"
+            type="number"
+            name="price"
+            autocomplete="off"
+          />
+          <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+              <ErrorMessage name="name2" />
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="text-center">
         <button
         tabindex="3"
@@ -76,7 +90,7 @@ export default defineComponent({
     const router = useRouter();
 
     const onSubmit = async (values: any) => {
-    const data = { name: values.name };
+    const data = { name: values.name, price: parseFloat(values.price) };
     const Callback = await ApiService.Post("operation/create", data, JwtService.getToken());
     
     if (submitButton.value) {
